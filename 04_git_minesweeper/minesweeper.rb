@@ -1,7 +1,8 @@
+require 'yaml'
 require_relative 'board'
 
 class MineSweeper
-  VALID_VALS = ["F", "C"]
+  VALID_VALS = ["F", "C", "S"]
 
   attr_reader :board
 
@@ -85,6 +86,8 @@ class MineSweeper
       board[pos].reveal
     when "C"
       play_turn
+    when "S"
+      save
     end
   end
 
@@ -97,9 +100,20 @@ class MineSweeper
       puts "Sorry, you lost!"
     end
   end
+
+  def save
+    puts "Enter filename to save:"
+    filename = gets.chomp
+    File.write(filename, YAML.dump(self))
+  end
 end
 
 if __FILE__ == $PROGRAM_NAME
-  game = MineSweeper.new()
-  game.run
+  case ARGV.count
+  when 0
+    game = MineSweeper.new()
+    game.run
+  when 1
+    YAML.load_file(ARGV.shift).run
+  end
 end
