@@ -1,5 +1,11 @@
+require 'byebug'
+require 'colorize'
+
 class Tile
-attr_reader :value, :flagged, :bombed, :revealed, :board
+  BOMB = :B
+  FLAG = :F
+
+  attr_reader :value, :flagged, :bombed, :revealed
 
   def initialize(value, board)
     @value = value
@@ -10,7 +16,7 @@ attr_reader :value, :flagged, :bombed, :revealed, :board
   end
 
   def inspect
-    { 'value' => @value, 'flagged' => @flagged, 
+    { 'object_id' => self.object_id, 'value' => @value, 'flagged' => @flagged, 
       'bombed' => @bombed, 'revealed' => @revealed }.inspect
   end
 
@@ -18,8 +24,36 @@ attr_reader :value, :flagged, :bombed, :revealed, :board
     @value = new_value
   end
 
-  def toggle_reveal
-    @revealed = !@revealed
+  def toggle_flagged
+    @flagged = !@flagged
+  end
+
+  def bomb
+    @bombed = true
+  end
+
+  def color
+    return :green if flagged
+    return :red if value == BOMB
+  end
+
+  def to_s
+    flagged ? FLAG.to_s.colorize(color) : value.to_s.colorize(color)
+  end
+
+  def reveal
+    if !flagged && !revealed
+      @revealed = true
+      if value == BOMB && revealed
+        bomb
+        return
+      end
+      @value = neighbour_bomb_count == 0 ? " " : neighbour_bomb_count
+      reveal_neighbours if value == " "
+    elsif flagged
+      puts "Unflag before trying to reveal"
+      sleep(2)
+    end
   end
 
   def my_pos
@@ -70,9 +104,13 @@ attr_reader :value, :flagged, :bombed, :revealed, :board
   end
 
   def neighbour_bomb_count
-    neighbours.count { |tile| tile.value == "B" }
+    neighbours.count { |tile| tile.value == BOMB if tile }
   end
 
-  # private
-  # attr_reader :board
+  def reveal_neighbours
+    neighbours.each {|neighbour| neighbour.reveal if neighbour }
+  end
+
+  private
+  attr_reader :board
 end
