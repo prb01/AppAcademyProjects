@@ -1,6 +1,8 @@
 require_relative 'board'
 
 class MineSweeper
+  VALID_VALS = ["F", "C"]
+
   attr_reader :board
 
   def initialize(board = Board.new())
@@ -47,7 +49,7 @@ class MineSweeper
   def get_val
     val = nil
     until val && valid_val?(val)
-      puts "ENTER to reveal or F to flag"
+      puts "ENTER to reveal or F to flag. C to change position."
       print "> "
       val = gets.chomp
     end
@@ -57,7 +59,7 @@ class MineSweeper
 
   def valid_val?(val)
     if val.length <= 1 &&
-      ( val.upcase == "F" || val.empty? )
+      ( VALID_VALS.include?(val.upcase) || val.empty? )
       return true
     else
       return false
@@ -73,7 +75,7 @@ class MineSweeper
   end
 
   def play_turn
-    board.render
+    board.render(board.hidden_board)
     pos = get_pos
     val = get_val
     case val.upcase
@@ -81,13 +83,14 @@ class MineSweeper
       board[pos].toggle_flagged
     when ""
       board[pos].reveal
+    when "C"
+      play_turn
     end
   end
 
   def run
     play_turn until solved? || lost?
-    board.reveal_all
-    board.render
+    board.render(board.show_board)
     if solved?
       puts "Congratulations on solving!"
     else
@@ -96,5 +99,7 @@ class MineSweeper
   end
 end
 
-game = MineSweeper.new()
-game.run
+if __FILE__ == $PROGRAM_NAME
+  game = MineSweeper.new()
+  game.run
+end

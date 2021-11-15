@@ -60,10 +60,18 @@ class Board
     end
   end
 
-  def render
+  def show_board
+    board.map do |row|
+      row.map do |tile|
+        tile.to_s
+      end
+    end
+  end
+
+  def render(board)
     system("clear")
     puts "  #{(0...size).to_a.join(" ")}".colorize(:light_blue)
-    hidden_board.each_with_index do |row, i|
+    board.each_with_index do |row, i|
       puts "#{i.to_s.colorize(:light_blue)} #{row.map(&:to_s).join(" ")}"
     end
   end
@@ -102,6 +110,15 @@ class Board
       row.each do |tile|
         tile.toggle_flagged until !tile.flagged
         tile.reveal until tile.revealed
+      end
+    end
+  end
+
+  def reveal_all_minus_bombs
+    board.each do |row|
+      row.each do |tile|
+        tile.toggle_flagged until !tile.flagged
+        tile.reveal until tile.revealed if tile.value != BOMB
       end
     end
   end
