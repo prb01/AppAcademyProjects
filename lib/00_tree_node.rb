@@ -7,23 +7,22 @@ class PolyTreeNode
     @children = []
   end
 
-  def parent=(new_parent)
-    parent.children.delete_if { |child| child == self } if parent
-    @parent = new_parent
+  def parent=(parent_node)
+    parent.remove_child(self) if parent && parent_node
+    @parent = parent_node
     parent.add_child(self) if parent
   end
 
-  def add_child(new_child)
-    if children.none? { |child| child == new_child } 
-      children << new_child
-      new_child.parent = self if new_child.parent != self
+  def add_child(child_node)
+    if children.none? { |child| child == child_node } 
+      children << child_node
+      child_node.parent = self if child_node.parent != self
     end
   end
 
-  def remove_child(old_child)
-    raise "Node is not a child" if !children.include?(old_child)
-    old_child.parent = nil
-    children.delete_if { |child| child == old_child }
+  def remove_child(child_node)
+    raise "Node is not a child" if !children.include?(child_node)
+    children.delete_if { |child| child == child_node }
+    child_node.parent = nil
   end
-
 end
