@@ -59,4 +59,32 @@ class KnightPathFinder
     return [node.value] if !node.parent
     path = trace_path_back(node.parent) + [node.value]
   end
+
+  def render(pos)
+    board = Array.new(8) { Array.new(8, " ") }
+    r,c = pos
+    board[r][c] = "K"
+
+    system("clear")
+
+    puts "  #{(0..7).to_a.join("|")}|"
+    board.each_with_index do |row, i|
+      puts "#{i}|#{row.join("|")}|"
+    end
+  end
+
+  def render_path(path)
+    path.each_with_index do |pos, i|
+      render(pos)
+      puts "path: #{path}"
+      puts "move: #{i}"
+      sleep(2)
+    end
+  end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  kpf = KnightPathFinder.new([0,0])
+  kpf.render_path(kpf.find_path([1,1]))
+  kpf.render_path(kpf.find_path([7,7]))
 end
