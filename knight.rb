@@ -9,7 +9,17 @@ class KnightPathFinder
   ]
 
   def self.valid_moves(pos)
-    
+    r,c = pos
+    moves = DELTAS.map do |delta|
+      dr,dc = delta
+      [r + dr, c + dc]
+    end
+
+    moves.reject! do |move|
+      move.any? { |x| !(0..7).include?(x) }
+    end
+
+    moves
   end
 
   attr_reader :root_node
