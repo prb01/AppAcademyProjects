@@ -14,8 +14,14 @@ class TicTacToeNode
       (board.tied? || board.winner == evaluator)
     return true if board.over? && board.winner != evaluator
 
-    children.any? do |child|
-      child.losing_node?(evaluator)
+    if next_mover_mark != evaluator
+      children.any? do |child|
+        child.losing_node?(evaluator)
+      end
+    else
+      children.all? do |child|
+        child.losing_node?(evaluator)
+      end
     end
   end
 
@@ -23,8 +29,14 @@ class TicTacToeNode
     return true if board.over? && board.winner == evaluator
     return false if board.over?
     
-    children.any? do |child|
-      child.winning_node?(evaluator)
+    if next_mover_mark != evaluator
+      children.all? do |child|
+        child.winning_node?(evaluator)
+      end
+    else
+      children.any? do |child|
+        child.winning_node?(evaluator)
+      end
     end
   end
 
