@@ -1,5 +1,7 @@
 # DON'T EDIT ME!
 
+require_relative "tic_tac_toe_node"
+
 class Board
   attr_reader :rows
 
@@ -100,9 +102,11 @@ class TicTacToe
 
   def run
     until self.board.over?
+      show
       play_turn
     end
 
+    show
     if self.board.won?
       winning_player = self.players[self.board.winner]
       puts "#{winning_player.name} won the game!"
@@ -112,8 +116,20 @@ class TicTacToe
   end
 
   def show
+    system("clear")
     # not very pretty printing!
-    self.board.rows.each { |row| p row }
+    self.board.rows.each_with_index do |row, i| 
+      str = row.map do |el|
+        if el
+          el
+        else
+          " "
+        end
+      end.join("|")
+      puts str
+      puts "—" * 5 if i < board.rows.length - 1
+    end
+    puts
   end
 
   private
@@ -147,7 +163,6 @@ class HumanPlayer
   end
 
   def move(game, mark)
-    game.show
     while true
       puts "#{@name}: please select your space"
       row, col = gets.chomp.split(",").map(&:to_i)
