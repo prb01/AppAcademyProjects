@@ -1,4 +1,4 @@
-require_relative '04_data_polytreenode/lib/00_tree_node.rb'
+require_relative '../04_data_polytreenode/lib/00_tree_node.rb'
 
 class KnightPathFinder
   DELTAS = [
