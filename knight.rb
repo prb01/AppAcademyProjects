@@ -49,6 +49,14 @@ class KnightPathFinder
     moves
   end
 
-  def find_path
+  def find_path(end_pos)
+    end_node = root_node.bfs(end_pos)
+    return trace_path_back(end_node) if end_node
+    nil
+  end
+
+  def trace_path_back(node)
+    return [node.value] if !node.parent
+    path = trace_path_back(node.parent) + [node.value]
   end
 end
