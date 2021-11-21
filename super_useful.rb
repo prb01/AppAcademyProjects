@@ -45,6 +45,10 @@ end
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise ArgumentError.new("We haven't known each other long enough to be best friends.") if yrs_known < 5
+    raise ArgumentError.new("Please add your name") if name.length <= 0
+    raise ArgumentError.new("Please add favourite past times") if fav_pastime.length <= 0
+
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
