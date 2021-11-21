@@ -1,16 +1,26 @@
 # PHASE 2
 def convert_to_int(str)
-  Integer(str)
+  begin
+    Integer(str)
+  rescue ArgumentError => e
+    puts "The string cannot be converted to integer."
+    puts e.backtrace
+  end
 end
 
 # PHASE 3
+class CoffeeError < StandardError
+end
+
 FRUITS = ["apple", "banana", "orange"]
 
 def reaction(maybe_fruit)
   if FRUITS.include? maybe_fruit
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
-    raise StandardError 
+  elsif maybe_fruit.upcase == "COFFEE"
+    raise CoffeeError.new("mmm coffee")
+  else
+    raise StandardError.new("No like food")
   end 
 end
 
@@ -18,8 +28,18 @@ def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
 
   puts "Feed me a fruit! (Enter the name of a fruit:)"
-  maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
+    
+  begin
+    maybe_fruit = gets.chomp
+    reaction(maybe_fruit)
+  rescue => e
+    if e.is_a?(CoffeeError)
+      puts e.message
+      puts "Feed me food now!"
+      retry
+    end
+      puts "#{e.message} #{e.backtrace}" 
+  end
 end  
 
 # PHASE 4
