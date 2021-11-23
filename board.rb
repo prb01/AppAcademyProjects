@@ -7,7 +7,7 @@ class Board
     @rows = Array.new(8) { Array.new(8, nil) } 
     # @null_piece = NullPiece.new()
 
-    @rows.each_with_index.map do |row, r|
+    @rows = @rows.each_with_index.map do |row, r|
       row.each_with_index.map do |el, c|
         Piece.new(:red, self, [r,c]) if [0,1,6,7].include?(r)
       end
@@ -15,12 +15,22 @@ class Board
   end
 
   def [](pos)
+    r,c = pos
+    rows[r][c]
   end
 
   def []=(pos, val)
+    r,c = pos
+    rows[r][c] = val
   end
 
-  def move_piece(color, start_pos, end_pos)
+  def move_piece(start_pos, end_pos)
+    raise "No piece at start position." if !self[start_pos]
+    raise "Cannot move to end position." if !end_pos.all? { |x| (0..7).include?(x) }
+    
+    self[end_pos] = self[start_pos]
+    self[start_pos] = nil
+    true
   end
 
   def valid_pos?(pos)
