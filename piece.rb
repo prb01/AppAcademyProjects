@@ -30,6 +30,7 @@ class Piece
   end
 
   def symbol
+    raise NotImplementedError
   end
 
   private
@@ -39,24 +40,6 @@ end
 
 
 module Slideable
-  def horizontal_dirs
-    HORIZONTAL_DIRS
-  end
-
-  def diagonal_dirs
-    DIAGONAL_DIRS
-  end
-
-  def moves
-    moves = []
-    move_dirs.each do |dir|
-      dr, dc = dir
-      moves += grow_unblocked_moves_in_dir(dr, dc)
-    end
-    moves
-  end
-
-  private
   HORIZONTAL_DIRS = [
     [1, 0], [-1, 0],
     [0, 1], [0, -1]
@@ -67,7 +50,25 @@ module Slideable
     [-1, 1], [-1, -1]
   ]
 
+  def horizontal_dirs
+    HORIZONTAL_DIRS
+  end
+
+  def diagonal_dirs
+    DIAGONAL_DIRS
+  end
+
+  def moves
+    moves = []
+    move_dirs.each do |dr, dc|
+      moves += grow_unblocked_moves_in_dir(dr, dc)
+    end
+    moves
+  end
+
+  private
   def move_dirs
+    raise NotImplementedError
   end
 
   def grow_unblocked_moves_in_dir(dr, dc)
@@ -93,7 +94,7 @@ class Rook < Piece
   include Slideable
 
   def symbol
-    :R
+    '♜'
   end
 
   private
@@ -106,7 +107,7 @@ class Bishop < Piece
   include Slideable
 
   def symbol
-    :B
+    '♝'
   end
 
   private
@@ -119,7 +120,7 @@ class Queen < Piece
   include Slideable
 
   def symbol
-    :Q
+    '♛'
   end
 
    private
@@ -153,7 +154,7 @@ class Knight < Piece
   include Stepable
 
   def symbol
-    :H
+    '♞'
   end
 
   protected
@@ -171,7 +172,7 @@ class King < Piece
   include Stepable
 
   def symbol
-    :K
+    '♚'
   end
 
   protected
@@ -187,7 +188,7 @@ end
 
 class Pawn < Piece
   def symbol
-    :P
+    '♟'
   end
 
   def moves
@@ -249,14 +250,15 @@ class Pawn < Piece
 end
 
 class NullPiece < Piece
+  attr_reader :symbol
   include Singleton
 
   def initialize
-  end
-
-  def symbol
+    @symbol = " "
+    @color = :none
   end
 
   def moves
+    []
   end
 end
