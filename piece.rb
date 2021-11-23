@@ -195,10 +195,9 @@ class Pawn < Piece
       moves << new_pos if board[new_pos] == nil
     end
 
-    [-1, 1].each do |diag|
-      new_r = r + forward_dir
-      new_c = c + diag
-      new_pos = [new_r, new_c]
+    side_attacks.each do |diag|
+      dr, dc = diag
+      new_pos = [r + dr, c + dc]
 
       if board.valid_pos?(new_pos) && 
         board[new_pos] != nil && board[new_pos].color != color
@@ -238,6 +237,7 @@ class Pawn < Piece
   end
 
   def side_attacks
+    [[forward_dir, -1], [forward_dir, 1]]
   end
 end
 
