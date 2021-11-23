@@ -4,10 +4,14 @@ require 'singleton'
 class Piece
   attr_reader :color, :board, :pos
 
-  def initialize(color, board = nil, pos)
+  def initialize(color, board, pos)
     @color = color
     @board = board
     @pos = pos
+  end
+
+  def inspect
+    {'class' => self.class, 'color' => color, 'pos' => pos}.inspect
   end
 
   def to_s
@@ -15,6 +19,7 @@ class Piece
   end
 
   def empty?
+    self.is_a?(NullPiece)
   end
 
   def valid_moves
@@ -70,7 +75,7 @@ module Slideable
     new_pos = [r + dr, c + dc]
     moves_in_dir = []
 
-    while board.valid_pos?(new_pos) && board[new_pos] == nil
+    while board.valid_pos?(new_pos) && board[new_pos].empty?
       moves_in_dir << new_pos
       r, c = new_pos
       new_pos = [r + dr, c + dc]
@@ -132,7 +137,7 @@ module Stepable
       dr, dc = dir
       new_pos = [r + dr, c + dc]
       if board.valid_pos?(new_pos) && 
-        (board[new_pos] == nil || board[new_pos].color != color )
+        (board[new_pos].empty? || board[new_pos].color != color )
         moves << new_pos
       end
     end
@@ -192,7 +197,9 @@ class Pawn < Piece
     forward_steps.each do |step|
       new_r = r + (step * forward_dir)
       new_pos = [new_r, c]
-      moves << new_pos if board[new_pos] == nil
+      if board.valid_pos?(new_pos) && board[new_pos].empty?
+        moves << new_pos
+      end
     end
 
     side_attacks.each do |diag|
@@ -200,7 +207,7 @@ class Pawn < Piece
       new_pos = [r + dr, c + dc]
 
       if board.valid_pos?(new_pos) && 
-        board[new_pos] != nil && board[new_pos].color != color
+        !board[new_pos].empty? && board[new_pos].color != color
         moves << new_pos
       end
     end
