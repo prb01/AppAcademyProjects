@@ -4,47 +4,8 @@ class Board
   attr_reader :rows
 
   def initialize
-    @rows = Array.new(8) { Array.new(8, nil) } 
     @null_piece = NullPiece.instance
-
-    @rows = @rows.each_with_index.map do |row, r|
-      row.each_with_index.map do |el, c|
-        case r
-        when 0
-          case c
-          when 0, 7
-            Rook.new(:black, self, [r,c])
-          when 1, 6
-            Knight.new(:black, self, [r,c])
-          when 2, 5
-            Bishop.new(:black, self, [r,c])
-          when 3
-            Queen.new(:black, self, [r,c])
-          when 4
-            King.new(:black, self, [r,c])
-          end
-        when 1
-          Pawn.new(:black, self, [r,c])
-        when 6
-          Pawn.new(:white, self, [r,c])
-        when 7
-          case c
-          when 0, 7
-            Rook.new(:white, self, [r,c])
-          when 1, 6
-            Knight.new(:white, self, [r,c])
-          when 2, 5
-            Bishop.new(:white, self, [r,c])
-          when 3
-            Queen.new(:white, self, [r,c])
-          when 4
-            King.new(:white, self, [r,c])
-          end
-        else
-          null_piece
-        end
-      end
-    end
+    reset_board
   end
 
   def [](pos)
@@ -64,6 +25,10 @@ class Board
       raise "Cannot move to end position."
     end
     
+    move_piece!(color, start_pos, end_pos)
+  end
+
+  def move_piece!(color, start_pos, end_pos)
     self[end_pos] = self[start_pos]
     self[start_pos] = null_piece
     self[end_pos].pos = end_pos
@@ -75,6 +40,7 @@ class Board
   end
 
   def add_piece(piece, pos)
+    self[pos] = piece
   end
 
   def checkmate?(color)
@@ -92,9 +58,34 @@ class Board
   def dup
   end
 
-  def move_piece!(color, start_pos, end_pos)
-  end
-
   private
   attr_reader :null_piece
+
+  def fill_back_row(color)
+    back_pieces = [
+      Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
+    ]
+
+    r = color == :black ? 0 : 7
+
+    back_pieces.each_with_index do |piece, c|
+      piece.new(color, self, [r, c])
+    end
+  end
+
+  def fill_pawn_row(color)
+    r = color == :black ? 1 : 6
+
+    (0..7).each do |c|
+      Pawn.new(color, self, [r, c])
+    end
+  end
+
+  def reset_board
+    @rows = Array.new(8) { Array.new(8, null_piece) }
+    [:white, :black].each do |color|
+      fill_back_row(color)
+      fill_pawn_row(color)
+    end
+  end
 end
