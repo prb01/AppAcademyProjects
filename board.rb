@@ -9,7 +9,14 @@ class Board
 
     @rows = @rows.each_with_index.map do |row, r|
       row.each_with_index.map do |el, c|
-        Piece.new(:red, self, [r,c]) if [0,1,6,7].include?(r)
+        case r
+        when 0, 1
+          Piece.new(:black, self, [r,c])
+        when 6, 7
+          Piece.new(:white, self, [r,c])
+        else
+          nil
+        end
       end
     end
   end
@@ -34,6 +41,7 @@ class Board
   end
 
   def valid_pos?(pos)
+    pos.all? { |x| (0..7).include?(x) }
   end
 
   def add_piece(piece, pos)
