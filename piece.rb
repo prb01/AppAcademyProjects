@@ -15,7 +15,7 @@ class Piece
   end
 
   def to_s
-    symbol.to_s.colorize(color)
+    symbol.colorize(color)
   end
 
   def empty?
