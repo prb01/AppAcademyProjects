@@ -25,6 +25,11 @@ class Piece
   end
 
   def valid_moves
+    valid_moves = self.moves.select do |move|
+      dup_board = board.dup
+      dup_board.move_piece(self.color, self.pos, move)
+      !dup_board.in_check?(self.color)
+    end
   end
 
   def pos=(val)
