@@ -5,9 +5,10 @@ require_relative 'cursor'
 class Display
   attr_reader :board, :cursor
 
-  def initialize(board = Board.new)
+  def initialize(debug_info = false, board = Board.new)
     @board = board
     @cursor = Cursor.new([0,0], board)
+    @debug_info = debug_info
   end
 
   def render
@@ -41,13 +42,30 @@ class Display
     end
 
     puts "   #{('a'..'h').to_a.join("  ")}  "
+
+    debug_render if debug_info
+  end
+
+  private
+  attr_reader :debug_info
+
+  def debug_render
+    piece = board[cursor.cursor_pos]
+    puts "#{piece.color} #{piece.class} @ #{cursor.cursor_pos}"
+
+    if [:white, :black].include?(piece.color)
+      puts "moves: #{piece.moves}"
+      puts "v_mov: #{piece.valid_moves}"
+      puts "check? #{board.in_check?(piece.color)}"
+      puts "cmate? #{board.checkmate?(piece.color)}"
+    end
   end
 end
 
-# if __FILE__ == $PROGRAM_NAME
-#   display = Display.new
-#   while true
-#     display.render
-#     display.cursor.get_input
-#   end
-# end
+if __FILE__ == $PROGRAM_NAME
+  display = Display.new(true)
+  while true
+    display.render
+    display.cursor.get_input
+  end
+end
