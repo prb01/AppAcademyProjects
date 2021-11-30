@@ -21,7 +21,7 @@ class Board
   def move_piece(color, start_pos, end_pos)
     if !valid_pos?(start_pos) || (self[start_pos] == null_piece)
       raise "No piece at start position."
-    elsif !self[start_pos].moves.include?(end_pos)
+    elsif !self[start_pos].valid_moves.include?(end_pos)
       raise "Cannot move to end position."
     end
     
