@@ -61,11 +61,3 @@ class Display
     end
   end
 end
-
-if __FILE__ == $PROGRAM_NAME
-  display = Display.new(true)
-  while true
-    display.render
-    display.cursor.get_input
-  end
-end
