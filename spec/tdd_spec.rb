@@ -137,3 +137,36 @@ describe Board do
     end
   end
 end
+
+describe Player do
+  let(:board) { double("board") }
+  subject(:player) { Player.new("Patrick", board) }
+
+  describe '#initialize' do
+    it 'takes name as an input' do
+      expect(player.name).to eq("Patrick")
+    end
+
+    it 'takes board as an input' do
+      expect(player.board).to eq board
+    end
+  end
+end
+
+describe Hanoi do
+  subject(:game) { Hanoi.new("Patrick") }
+
+  describe '#initialize' do
+    it 'takes name as an input' do
+      expect(game).not_to raise_error(ArgumentError)
+    end
+
+    it 'creates Player instance' do
+      expect(game.player.class).to eq("Player")
+    end
+
+    it 'creates Board instance' do
+      expect(game.board.class).to eq("Board")
+    end
+  end
+end

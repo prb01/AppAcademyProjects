@@ -42,6 +42,22 @@ class Array
 end
 
 class Hanoi
+  attr_reader :player, :board
+
+  def initialize(name, size = 4)
+    @board = Board.new(size)
+    @player = Player.new(name, board)
+  end
+
+  def play
+    until board.won?
+      board.render
+      player.make_move
+    end
+
+    board.render
+    puts "You won!"
+  end
 
 end
 
@@ -67,6 +83,13 @@ class Board
     false
   end
 
+  def render
+    system("clear")
+    board.each_with_index do |row, i|
+      puts "#{i}: #{row.join(" ")}"
+    end
+  end
+
   private
   def populate_board
     (1..size).each do |i|
@@ -77,6 +100,7 @@ class Board
   def valid_move?(idx1, idx2)
     if (0..2).to_a.include?(idx1) &&
       (0..2).to_a.include?(idx2) &&
+      !@board[idx1].empty? &&
       (@board[idx2].empty? || @board[idx1][-1] < @board[idx2][-1])
       return true
     else
@@ -86,11 +110,31 @@ class Board
 end
 
 class Player
-  def initialize(name)
+  attr_reader :name, :board
+
+  def initialize(name, board)
     @name = name
+    @board = board
   end
 
   def make_move
-
+    prompt
+    from, to = get_input
+    board.move_disc(from, to)
   end
+
+  private
+  def prompt
+    puts "Select stacks to move from/to. Hit enter between each choice"
+  end
+
+  def get_input
+    input = []
+    2.times { input << Integer(gets.chomp) }
+    input
+  end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  Hanoi.new("Patrick").play
 end
