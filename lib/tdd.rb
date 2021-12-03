@@ -15,4 +15,16 @@ class Array
 
     two_sum
   end
+
+  def my_transpose
+    transposed = []
+
+    (0...self.length).each do |i|
+      temp_arr = []
+      (0...self.length).each { |j| temp_arr << self[j][i] }
+      transposed << temp_arr
+    end
+
+    transposed
+  end
 end

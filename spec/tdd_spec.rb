@@ -27,4 +27,25 @@ describe Array do
       expect(arr2.two_sum).to eq([[1, 5], [2, 6], [3, 4]])
     end
   end
+
+  describe '#my_transpose' do
+    let(:rows) { [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8]
+    ] }
+    let(:cols) { [
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8]
+    ] }
+
+    it 'transposes rows to cols in square array' do
+      expect(rows.my_transpose).to eq(cols)
+    end
+
+    it 'transposes cols to rows in square array' do
+      expect(cols.my_transpose).to eq(rows)
+    end
+  end
 end
