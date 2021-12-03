@@ -19,6 +19,12 @@ describe Array do
     let(:arr) { [-1, 0, 2, -2, 1] }
     let(:arr2) { [0, -5, -3, 1, -1, 5, 3] }
 
-    it 
+    it 'returns positions of values that sum to zero' do
+      expect(arr.two_sum).to eq([[0, 4], [2, 3]])
+    end
+
+    it 'returns positions in numeric order' do
+      expect(arr2.two_sum).to eq([[1, 5], [2, 6], [3, 4]])
+    end
   end
 end
