@@ -40,3 +40,57 @@ class Array
     days = [low, high]
   end
 end
+
+class Hanoi
+
+end
+
+class Board
+  attr_reader :size, :board
+
+  def initialize(size = 4)
+    @size = size
+    @board = Array.new(3) { Array.new }
+    populate_board
+  end
+
+  def move_disc(idx1, idx2)
+    if valid_move?(idx1, idx2)
+      val = @board[idx1].pop
+      @board[idx2] << val
+    end
+  end
+
+  def won?
+    win_stack = (1..size).to_a.reverse
+    return true if @board[-1] == win_stack
+    false
+  end
+
+  private
+  def populate_board
+    (1..size).each do |i|
+      @board[0].unshift(i)
+    end
+  end
+
+  def valid_move?(idx1, idx2)
+    if (0..2).to_a.include?(idx1) &&
+      (0..2).to_a.include?(idx2) &&
+      (@board[idx2].empty? || @board[idx1][-1] < @board[idx2][-1])
+      return true
+    else
+      return false
+    end
+  end
+end
+
+class Player
+  def initialize(name)
+    @name = name
+  end
+
+  def make_move
+
+  end
+end

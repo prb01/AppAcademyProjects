@@ -77,3 +77,63 @@ describe Array do
     end
   end
 end
+
+describe Board do
+  subject(:board) { Board.new }
+
+  describe '#initialize' do
+    it 'takes @size of stacks as an input' do
+      expect(Board.new(5).size).to eq(5)
+    end
+
+    it 'defaults to a size of 4 if not provided' do
+      expect(board.size).to eq(4)
+    end
+
+    it 'creates a @board with 3 arrays' do
+      expect(board.board.length).to eq(3)
+    end
+
+    it 'populates 1st array with discs in descending order depending on size' do
+      expect(board.board[0]).to eq([4, 3, 2, 1])
+    end
+  end
+
+  describe '#move_disc' do
+    it 'moves top disc to another stack' do
+      board.move_disc(0, 2)
+      expect(board.board).to eq([[4, 3, 2], [], [1]])
+    end
+
+    it 'does not move disc if disc is smaller' do
+      board.move_disc(0, 2)
+      board.move_disc(0, 2)
+      expect(board.board).to eq([[4, 3, 2], [], [1]])
+    end
+
+    it 'does not move disc if stack is out of range' do
+      board.move_disc(0, 2)
+      board.move_disc(0, 5)
+      expect(board.board).to eq([[4, 3, 2], [], [1]])
+    end
+  end
+
+  describe '#won?' do
+    let(:small_board) { Board.new(3) }
+
+    it 'return false if not won' do
+      expect(small_board.won?).to eq false
+    end
+
+    it 'return true  if won' do
+      small_board.move_disc(0, 2)
+      small_board.move_disc(0, 1)
+      small_board.move_disc(2, 1)
+      small_board.move_disc(0, 2)
+      small_board.move_disc(1, 0)
+      small_board.move_disc(1, 2)
+      small_board.move_disc(0, 2)
+      expect(small_board.won?).to eq true
+    end
+  end
+end
