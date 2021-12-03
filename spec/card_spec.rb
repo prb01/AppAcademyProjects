@@ -18,8 +18,12 @@ describe Card do
       expect(card.value).to eq(10)
     end
 
-    it 'sets value to face card name if above 10' do
-      expect(face_card.value).to eq("Q")
+    it 'sets face to nil if below 10' do
+      expect(card.face).to eq nil
+    end
+
+    it 'sets face to face card name if above 10' do
+      expect(face_card.face).to eq("Q")
     end
 
     it 'sets color based on suit' do
