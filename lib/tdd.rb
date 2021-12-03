@@ -27,4 +27,16 @@ class Array
 
     transposed
   end
+
+  def stock_picker
+    low, high = nil
+
+    self.each_with_index do |price, idx|
+      low = idx if !low || (self[low] > price)
+      high = idx if low && idx > low && (!high || price > self[high])
+    end
+
+    raise 'Stock bought at highest price' if high == nil
+    days = [low, high]
+  end
 end
