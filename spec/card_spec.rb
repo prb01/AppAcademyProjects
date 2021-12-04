@@ -2,8 +2,6 @@ require 'rspec'
 require 'card'
 
 describe Card do
-
-
   describe '#initialize' do
     let(:card) { Card.new("spade", 10)}
     let(:face_card) { Card.new("spade", 12)}
