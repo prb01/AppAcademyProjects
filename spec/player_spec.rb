@@ -2,9 +2,11 @@ require 'rspec'
 require 'player'
 
 describe Player do
+  let(:hand) { double(Hand, :class => Hand) }
   let(:player) { Player.new("PRB", 100) }
-  let(:hand) { double(Hand) }
-
+  let(:card) { double(Card) }
+  let(:deck) { double(Deck) }
+  
   describe '#initialize' do
     it 'takes name as an input' do
       expect(player.name).to eq("PRB")
@@ -42,5 +44,9 @@ describe Player do
   end
 
   describe '#discard' do
+    it 'discards selected card back to deck' do
+      expect(hand).to receive(:discard)
+      hand.discard(card, deck)
+    end
   end
 end
