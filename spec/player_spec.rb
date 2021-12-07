@@ -49,4 +49,16 @@ describe Player do
       hand.discard(card, deck)
     end
   end
+
+  describe '#bet' do
+    before(:each) { player.bet(20) }
+    
+    it 'updates cur_bet to amount' do
+      expect(player.cur_bet).to eq(20)
+    end
+
+    it 'reduces pot by amount' do
+      expect(player.pot).to eq(80)
+    end
+  end
 end

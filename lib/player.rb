@@ -1,22 +1,48 @@
 require_relative 'hand'
 
 class Player
-  attr_reader :name, :pot, :hand, :folded
+  attr_reader :name, :pot, :hand, :folded, :called, :raised, :cur_bet
 
   def initialize(name, pot = 100, hand = Hand.new)
     @name = name
     @pot = pot
+    @cur_bet = 0
     @hand = hand
     @folded = false
+    @called = false
+    @raised = false
+  end
+
+  def bet(amt)
+    change_pot(-amt)
+    @cur_bet = amt
+  end
+
+  def reset_round
+    @bet = 0
+    @called = false
+    @raised = false
+  end
+
+  def reset_match
+    reset_round
+    @folded = false
+    @hand = Hand.new
   end
 
   def change_pot(amt)
     new_pot = @pot + amt
     raise ArgumentError.new("Not enough in the pot.") if new_pot < 0
     @pot = new_pot
+    amt
+  end
+
+  def take_card(card)
+    @hand.add(card)
   end
 
   def display_hand
+    puts
     puts hand_arr.join(" ")
     puts " #{(0..4).to_a.join("   ")}"
   end
@@ -84,7 +110,7 @@ class Player
       sleep(1)
       retry
     end
-    
+
     amt
   end
 
@@ -96,14 +122,23 @@ class Player
     case move
     when 'fold', 'f'
       @folded = true
-      return "fold"
+      return 0
     when 'call', 'c'
-      change_pot(-bet)
-      return "call"
+      bet(bet)
+      @called = true
+      @raised = false
+      return bet
     when 'raise', 'r'
-      change_pot(-get_raise)
-      return "raise"
+      raise_amt = get_raise
+      bet(raise_amt)
+      @called = false
+      @raised = true
+      return raise_amt
     end
+  end
+
+  def toggle_called
+    @called = !called
   end
 
   private

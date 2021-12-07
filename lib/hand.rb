@@ -1,4 +1,5 @@
 require_relative 'deck'
+require 'set'
 
 class Hand
   attr_reader :hand
