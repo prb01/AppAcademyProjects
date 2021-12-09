@@ -22,7 +22,7 @@ puts my_min_2(list)
 
 #----------------------------------------------------------------------------
 
-def largest_contiguous_subsum_1(list) #=> O(n!)
+def largest_contiguous_subsum_1(list) #=> O(n^3)
   subs = []
   (0...list.length).each do |i|
     (i...list.length).each do |j|
