@@ -17,7 +17,8 @@ def second_anagram?(word1, word2)
   arr2 = word2.split("")
   word1.each_char do |ch|
     idx = arr2.find_index(ch)
-    arr2.delete_at(idx) if idx
+    return false unless idx
+    arr2.delete_at(idx)
   end
   arr2.empty?
 end
@@ -43,7 +44,7 @@ end
 
 
 # Time = O(n)
-# Space = O(n)
+# Space = O(1) (hash can only have a constant amount of abc's, 26)
 # def fourth_anagram?(word1, word2)
 #   word_hash1 = Hash.new(0)
 #   word_hash2 = Hash.new(0)
