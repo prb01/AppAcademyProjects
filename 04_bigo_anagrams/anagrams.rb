@@ -64,9 +64,9 @@ def fourth_anagram?(word1, word2)
   !word_hash.any? { |k, v| v != 0 }
 end
 
-puts fourth_anagram?("gizmo", "sally")    #=> false
-puts fourth_anagram?("elvis", "lives")    #=> true
-puts fourth_anagram?("hippopotamus", "sally")    #=> false
-puts fourth_anagram?("hippopotamus", "hippopotamus")    #=> true
-puts third_anagram?("verylongwordthatseemstohavenoendomgwhenwillthisennndddd", "sally")    #=> false
-puts third_anagram?("verylongwordthatseemstohavenoendomgwhenwillthisennndddd", "verylongwordthatseemstohavenoendomgwhenwillthisennndddd")    #=> true
+# puts fourth_anagram?("gizmo", "sally")    #=> false
+# puts fourth_anagram?("elvis", "lives")    #=> true
+# puts fourth_anagram?("hippopotamus", "sally")    #=> false
+# puts fourth_anagram?("hippopotamus", "hippopotamus")    #=> true
+# puts third_anagram?("verylongwordthatseemstohavenoendomgwhenwillthisennndddd", "sally")    #=> false
+# puts third_anagram?("verylongwordthatseemstohavenoendomgwhenwillthisennndddd", "verylongwordthatseemstohavenoendomgwhenwillthisennndddd")    #=> true
