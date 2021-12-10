@@ -1,5 +1,5 @@
 require 'benchmark'
-require_relative './04_bigo_anagrams/anagrams'
+require_relative '../04_bigo_anagrams/anagrams'
 
 
 ["a"*2, "a"*4, "a"*8, "a"*10].each do |word|
