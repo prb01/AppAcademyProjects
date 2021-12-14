@@ -47,11 +47,13 @@ describe HashMap do
 
   describe "#include?" do
     it "returns true if a key is present" do
-      expect(hash).to include(:first)
+      # expect(hash).to include(:first)
+      expect(hash.include?(:first)).to be true
     end
 
     it "returns false if a key is not in the hash" do
-      expect(hash).to_not include(:fourth)
+      # expect(hash).to_not include(:fourth)
+      expect(hash.include?(:fourth)).to be false
     end
   end
 

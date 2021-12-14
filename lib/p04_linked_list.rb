@@ -18,6 +18,7 @@ class Node
     # and removes self from list.
     self.prev.next = self.next
     self.next.prev = self.prev
+    self
   end
 end
 
