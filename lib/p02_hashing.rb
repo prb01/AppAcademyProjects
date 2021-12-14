@@ -19,7 +19,7 @@ end
 
 class String
   def hash
-    self.unpack("c*").hash
+    self.split("").hash
   end
 end
 
