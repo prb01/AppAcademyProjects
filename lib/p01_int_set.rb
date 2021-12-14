@@ -1,6 +1,6 @@
 class MaxIntSet
   attr_reader :store
-  
+
   def initialize(max)
     @max = max
     @store = Array.new(max + 1, false)
@@ -34,23 +34,31 @@ end
 
 
 class IntSet
+  attr_reader :num_buckets, :store
+
   def initialize(num_buckets = 20)
+    @num_buckets = num_buckets
     @store = Array.new(num_buckets) { Array.new }
   end
 
   def insert(num)
+    self[num] << num unless self.include?(num)
   end
 
   def remove(num)
+    self[num].delete(num) if self.include?(num)
   end
 
   def include?(num)
+    self[num].include?(num)
   end
 
   private
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
+    mod = num % num_buckets
+    @store[mod]
   end
 
   def num_buckets
