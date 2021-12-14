@@ -34,10 +34,9 @@ end
 
 
 class IntSet
-  attr_reader :num_buckets, :store
+  attr_reader :store
 
   def initialize(num_buckets = 20)
-    @num_buckets = num_buckets
     @store = Array.new(num_buckets) { Array.new }
   end
 
@@ -67,7 +66,7 @@ class IntSet
 end
 
 class ResizingIntSet
-  attr_reader :count
+  attr_reader :count, :store
 
   def initialize(num_buckets = 20)
     @store = Array.new(num_buckets) { Array.new }
@@ -87,6 +86,8 @@ class ResizingIntSet
 
   def [](num)
     # optional but useful; return the bucket corresponding to `num`
+    mod = num % num_buckets
+    @store[mod]
   end
 
   def num_buckets
