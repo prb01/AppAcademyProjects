@@ -37,10 +37,10 @@ class HashMap
     end
   end
 
-  def each(&prc)
-    store.each do |bucket| 
+  def each
+    self.store.each do |bucket| 
       bucket.each do |node|
-        prc.call([node.key, node.val])
+        yield [node.key, node.val]
       end
     end
   end
@@ -53,6 +53,7 @@ class HashMap
     "{\n" + pairs.join(",\n") + "\n}"
   end
 
+  alias_method :inspect, :to_s
   alias_method :[], :get
   alias_method :[]=, :set
 
@@ -62,16 +63,14 @@ class HashMap
     @store.length
   end
 
-  def resize!
-    old_num_buckets = num_buckets
-    num_buckets.times { @store << LinkedList.new }
+  def resize! #HashMap
+    old_store = store
+    @store = Array.new(num_buckets * 2) { LinkedList.new }
+    @count = 0
 
-    each do |key, val|
-      old_bucket(key, old_num_buckets).remove(key)
-      if include?(key)
-        bucket(key).update(key, val)
-      else
-        bucket(key).append(key, val)
+    old_store.each do |bucket|
+      bucket.each do |node|
+        set(node.key, node.val)
       end
     end
   end
@@ -81,9 +80,16 @@ class HashMap
     mod = key.hash % num_buckets
     @store[mod]
   end
+end
 
-  def old_bucket(key, old_num_buckets)
-    mod = key.hash % old_num_buckets
-    @store[mod]
-  end
+def test
+  hash = HashMap.new
+  7.times { |i| hash[i] = (i).to_s }
+  puts hash
+  hash[8] = 8
+  puts hash
+end
+
+if __FILE__ == $PROGRAM_NAME
+  test
 end

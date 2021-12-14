@@ -18,6 +18,8 @@ class Node
     # and removes self from list.
     self.prev.next = self.next
     self.next.prev = self.prev
+    self.next = nil
+    self.prev = nil
     self
   end
 end
@@ -40,40 +42,44 @@ class LinkedList
 
   def first
     return nil if empty?
-    head.next
+    self.head.next
   end
 
   def last
     return nil if empty?
-    tail.prev
+    self.tail.prev
   end
 
   def empty?
-    head.next == tail
+    self.head.next == self.tail
   end
 
   def get(key)
-    each { |node| return node.val if key == node.key }
+    each { |node| return node.val if node.key == key }
   end
 
   def include?(key)
-    each { |node| return true if key == node.key }
+    each { |node| return true if node.key == key }
     false
   end
 
   def append(key, val)
     node = Node.new(key, val)
-    node.next = tail
+
+    node.next = tail 
     node.prev = tail.prev
-    tail.prev = node
+    self.tail.prev = node
     node.prev.next = node
+    
+    node
   end
 
   def update(key, val)
     each do |node|
-      next unless key == node.key
-      node.val = val
-      break
+      if node.key == key
+        node.val = val
+        return node
+      end
     end
   end
 
@@ -81,16 +87,14 @@ class LinkedList
     each do |node|
       next unless key == node.key
       node.remove
-      break
+      return node
     end
   end
 
-  def each(&prc)
-    return nil if empty?
-
-    cur_node = first
-    until cur_node == tail
-      prc.call(cur_node)
+  def each
+    cur_node = self.head.next
+    until cur_node == self.tail
+      yield cur_node
       cur_node = cur_node.next
     end
   end
