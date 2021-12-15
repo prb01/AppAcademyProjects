@@ -52,9 +52,9 @@ describe LRUCache do
       expect(
         lru.instance_variable_get(:@store).map { |l| l.key }
       ).to eq([2, 3, 0])
-
+      
       lru.get(2) # cached: 3, 0, 2
-
+      
       expect(
         lru.instance_variable_get(:@store).map { |l| l.key }
       ).to eq([3, 0, 2])
