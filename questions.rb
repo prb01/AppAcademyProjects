@@ -79,6 +79,38 @@ class Question
   def num_likes
     QuestionLike.num_likes_for_question_id(self.id)
   end
+
+  def save
+    if self.id
+      update
+    else
+      insert
+    end
+  end
+
+  private
+  def insert
+    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id)
+    INSERT INTO
+      questions (title, body, author_id)
+    VALUES
+      (?, ?, ?)
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  end
+
+  def update
+    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id, self.id)
+    UPDATE
+      questions
+    SET
+      title = ?,
+      body = ?,
+      author_id = ?
+    WHERE
+      id = ?
+    SQL
+  end
 end
 
 
@@ -391,6 +423,8 @@ class QuestionLike
 end
 
 def test
+  system("cat import_db.sql | sqlite3 questions.db")
+
   Question.all
   Question.find_by_id(1)
   Question.find_by_author_id(1)
@@ -400,8 +434,13 @@ def test
   q.followers
   q.likers
   q.num_likes
-  new_q = Question.new('title' => 'New Q', 'body' => 'New body', 'author_id' => 1)
   Question.most_followed(2)
+  new_q = Question.new('title' => 'New Q', 'body' => 'New body', 'author_id' => 1)
+  new_q.save
+  Question.all
+  new_q.title = 'Updated title'
+  new_q.save
+  Question.all
 
   Reply.all
   Reply.find_by_id(1)
@@ -421,7 +460,7 @@ def test
   u.authored_replies
   u.followed_questions
   u.liked_questions
-  p u.average_karma
+  u.average_karma
   new_u = User.new('fname' => 'New', 'lname' => 'User')
 
   QuestionFollow.all
