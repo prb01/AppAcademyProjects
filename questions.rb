@@ -11,27 +11,39 @@ class QuestionsDatabase < SQLite3::Database
   end
 end
 
-class Question
-  def self.all
-    questions = QuestionsDatabase.instance.execute(<<-SQL)
+class ModelBase
+  def self.all(table)
+    results = QuestionsDatabase.instance.execute(<<-SQL)
     SELECT
       *
     FROM
-      questions
+      #{table}
     SQL
-    questions.map { |question| Question.new(question) }
+    results.map { |options| Object.const_get(name).new(options) }
   end
 
-  def self.find_by_id(id)
-    question = QuestionsDatabase.instance.execute(<<-SQL, id)
+  def self.find_by_id(table, id)
+    result = QuestionsDatabase.instance.execute(<<-SQL, id)
     SELECT
       *
     FROM
-      questions
+      #{table}
     WHERE
       id = ?
     SQL
-    Question.new(question.first)
+    Object.const_get(name).new(result.first)
+  end
+end
+
+class Question < ModelBase
+  TABLE_NAME = 'questions'
+
+  def self.all
+    super(TABLE_NAME)
+  end
+
+  def self.find_by_id(id)
+    super(TABLE_NAME, id)
   end
 
   def self.find_by_author_id(author_id)
@@ -114,27 +126,15 @@ class Question
 end
 
 
-class Reply
+class Reply < ModelBase
+  TABLE_NAME = 'replies'
+
   def self.all
-    replies = QuestionsDatabase.instance.execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      replies
-    SQL
-    replies.map { |reply| Reply.new(reply) }
+    super(TABLE_NAME)
   end
 
   def self.find_by_id(id)
-    reply = QuestionsDatabase.instance.execute(<<-SQL, id)
-    SELECT
-      *
-    FROM
-      replies 
-    WHERE
-      id = ?
-    SQL
-    Reply.new(reply.first)
+    super(TABLE_NAME, id)
   end
 
   def self.find_by_user_id(user_id)
@@ -226,27 +226,15 @@ class Reply
   end
 end
 
-class User
+class User < ModelBase
+  TABLE_NAME = 'users'
+
   def self.all
-    users = QuestionsDatabase.instance.execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      users
-    SQL
-    users.map { |user| User.new(user) }
+    super(TABLE_NAME)
   end
 
   def self.find_by_id(id)
-    user = QuestionsDatabase.instance.execute(<<-SQL, id)
-    SELECT
-      *
-    FROM
-      users
-    WHERE
-      id = ?
-    SQL
-    User.new(user.first)
+    super(TABLE_NAME, id)
   end
 
   def self.find_by_name(fname, lname)
@@ -345,15 +333,15 @@ class User
   end
 end
 
-class QuestionFollow
+class QuestionFollow < ModelBase
+  TABLE_NAME = 'question_follows'
+
   def self.all
-    qfollows = QuestionsDatabase.instance.execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      question_follows
-    SQL
-    qfollows.map { |options| QuestionFollow.new(options) }
+    super(TABLE_NAME)
+  end
+
+  def self.find_by_id(id)
+    super(TABLE_NAME, id)
   end
 
   def self.followers_for_question(question_id)
@@ -409,15 +397,15 @@ class QuestionFollow
   end
 end
 
-class QuestionLike
+class QuestionLike < ModelBase
+  TABLE_NAME = 'question_likes'
+
   def self.all
-    qlikes = QuestionsDatabase.instance.execute(<<-SQL)
-    SELECT
-      *
-    FROM
-      question_likes
-    SQL
-    qlikes.map { |options| QuestionLike.new(options) }
+    super(TABLE_NAME)
+  end
+
+  def self.find_by_id(id)
+    super(TABLE_NAME, id)
   end
 
   def self.likers_for_question_id(question_id)
@@ -530,20 +518,20 @@ def test
   u.followed_questions
   u.liked_questions
   u.average_karma
-  p new_u = User.new('fname' => 'New', 'lname' => 'User')
-  p new_u.save
-  p User.all
-  p new_u.fname = 'Updated'
-  p new_u.save
-  p User.all
+  new_u = User.new('fname' => 'New', 'lname' => 'User')
+  new_u.save
+  User.all
+  new_u.fname = 'Updated'
+  new_u.save
+  User.all
 
-  QuestionFollow.all
+  p QuestionFollow.all
   QuestionFollow.followers_for_question(2)
   QuestionFollow.followed_questions_for_user(1)
   QuestionFollow.most_followed_question(2)
   new_qf = QuestionFollow.new('question_id' => '5', 'user_id' => '1')
 
-  QuestionLike.all
+  p QuestionLike.all
   QuestionLike.likers_for_question_id(1)
   QuestionLike.num_likes_for_question_id(1)
   QuestionLike.liked_questions_for_user_id(5)
