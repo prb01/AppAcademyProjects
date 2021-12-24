@@ -12,61 +12,73 @@ class QuestionsDatabase < SQLite3::Database
 end
 
 class ModelBase
-  def self.all(table)
+  def self.all
     results = QuestionsDatabase.instance.execute(<<-SQL)
     SELECT
       *
     FROM
-      #{table}
+      #{self.table_name}
     SQL
     results.map { |options| Object.const_get(name).new(options) }
   end
 
-  def self.find_by_id(table, id)
+  def self.find_by_id(id)
     result = QuestionsDatabase.instance.execute(<<-SQL, id)
     SELECT
       *
     FROM
-      #{table}
+      #{self.table_name}
     WHERE
       id = ?
     SQL
     Object.const_get(name).new(result.first)
   end
 
-  def save(table)
+  def self.where
+    results = QuestionsDatabase.instance.execute(<<-SQL)
+    SELECT
+      *
+    FROM
+      #{self.table_name}
+    SQL
+    results.map { |options| Object.const_get(name).new(options) }
+  end
+
+  def save
     args = self.instance_variables.map { |var| self.instance_variable_get(var) }
 
     if self.id
-      update(table, *args)
+      update(*args)
     else
-      insert(table, *args)
+      insert(*args)
     end
   end
 
   private
-  def insert(table, *args)
+  def insert(*args)
     instance_vars = self.instance_variables
     ln = instance_vars.length
     vars = "(#{instance_vars.join(", ").split('@').join})"
     vals = "(#{instance_vars.map{|var| "?"}.join(", ")})"
+    table_name = Object.const_get(self.class.name).table_name
 
     QuestionsDatabase.instance.execute(<<-SQL, *args)
     INSERT INTO
-      #{table} #{vars}
+      #{table_name} #{vars}
     VALUES
       #{vals}
     SQL
     @id = QuestionsDatabase.instance.last_insert_row_id
   end
 
-  def update(table, *args)
+  def update(*args)
     instance_vars = self.instance_variables[1..-1]
     vars = "#{instance_vars.join(" = ?, ").split('@').join} = ?"
+    table_name = Object.const_get(self.class.name).table_name
 
     QuestionsDatabase.instance.execute(<<-SQL, *args.rotate(1))
     UPDATE
-      #{table}
+      #{table_name}
     SET
       #{vars}
     WHERE
@@ -78,12 +90,8 @@ end
 class Question < ModelBase
   TABLE_NAME = 'questions'
 
-  def self.all
-    super(TABLE_NAME)
-  end
-
-  def self.find_by_id(id)
-    super(TABLE_NAME, id)
+  def self.table_name
+    TABLE_NAME
   end
 
   def self.find_by_author_id(author_id)
@@ -131,22 +139,14 @@ class Question < ModelBase
   def num_likes
     QuestionLike.num_likes_for_question_id(self.id)
   end
-
-  def save
-    super(TABLE_NAME)
-  end
 end
 
 
 class Reply < ModelBase
   TABLE_NAME = 'replies'
 
-  def self.all
-    super(TABLE_NAME)
-  end
-
-  def self.find_by_id(id)
-    super(TABLE_NAME, id)
+  def self.table_name
+    TABLE_NAME
   end
 
   def self.find_by_user_id(user_id)
@@ -203,21 +203,13 @@ class Reply < ModelBase
     end
     replies
   end
-
-  def save
-    super(TABLE_NAME)
-  end
 end
 
 class User < ModelBase
   TABLE_NAME = 'users'
 
-  def self.all
-    super(TABLE_NAME)
-  end
-
-  def self.find_by_id(id)
-    super(TABLE_NAME, id)
+  def self.table_name
+    TABLE_NAME
   end
 
   def self.find_by_name(fname, lname)
@@ -283,21 +275,13 @@ class User < ModelBase
     SQL
     karma.first['avg_karma']
   end
-
-  def save
-    super(TABLE_NAME)
-  end
 end
 
 class QuestionFollow < ModelBase
   TABLE_NAME = 'question_follows'
 
-  def self.all
-    super(TABLE_NAME)
-  end
-
-  def self.find_by_id(id)
-    super(TABLE_NAME, id)
+  def self.table_name
+    TABLE_NAME
   end
 
   def self.followers_for_question(question_id)
@@ -356,12 +340,8 @@ end
 class QuestionLike < ModelBase
   TABLE_NAME = 'question_likes'
 
-  def self.all
-    super(TABLE_NAME)
-  end
-
-  def self.find_by_id(id)
-    super(TABLE_NAME, id)
+  def self.table_name
+    TABLE_NAME
   end
 
   def self.likers_for_question_id(question_id)
