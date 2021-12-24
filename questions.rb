@@ -312,6 +312,37 @@ class User
     SQL
     karma.first['avg_karma']
   end
+
+  def save
+    if self.id
+      update
+    else
+      insert
+    end
+  end
+
+  private
+  def insert
+    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname)
+    INSERT INTO
+      users (fname, lname)
+    VALUES
+      (?, ?)
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  end
+
+  def update
+    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname, self.id)
+    UPDATE
+      users 
+    SET
+      fname = ?, 
+      lname = ?
+    WHERE
+      id = ?
+    SQL
+  end
 end
 
 class QuestionFollow
@@ -499,7 +530,12 @@ def test
   u.followed_questions
   u.liked_questions
   u.average_karma
-  new_u = User.new('fname' => 'New', 'lname' => 'User')
+  p new_u = User.new('fname' => 'New', 'lname' => 'User')
+  p new_u.save
+  p User.all
+  p new_u.fname = 'Updated'
+  p new_u.save
+  p User.all
 
   QuestionFollow.all
   QuestionFollow.followers_for_question(2)
