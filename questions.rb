@@ -217,6 +217,10 @@ class User
   def followed_questions
     QuestionFollow.followed_questions_for_user(self.id)
   end
+
+  def liked_questions
+    QuestionLike.liked_questions_for_user_id(self.id)
+  end
 end
 
 class QuestionFollow
@@ -334,6 +338,24 @@ class QuestionLike
     questions.map { |options| Question.new(options)}
   end
 
+  def self.most_liked_questions(n)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, n)
+    SELECT
+      q.*, COUNT(ql.user_id) AS count_of_likes
+    FROM
+      questions q
+    JOIN
+      question_likes ql ON (q.id = ql.question_id)
+    GROUP BY
+      q.id
+    ORDER BY
+      count_of_likes DESC, q.id ASC
+    LIMIT
+      ?
+    SQL
+    questions.map { |options| Question.new(options)}
+  end
+
   def initialize(options)
     @id = options['id']
     @question_id = options['question_id']
@@ -372,6 +394,7 @@ def test
   u.authored_questions
   u.authored_replies
   u.followed_questions
+  u.liked_questions
   new_u = User.new('fname' => 'New', 'lname' => 'User')
 
   QuestionFollow.all
@@ -384,6 +407,7 @@ def test
   QuestionLike.likers_for_question_id(1)
   QuestionLike.num_likes_for_question_id(1)
   QuestionLike.liked_questions_for_user_id(5)
+  QuestionLike.most_liked_questions(3)
 end
 
 if __FILE__ == $PROGRAM_NAME
