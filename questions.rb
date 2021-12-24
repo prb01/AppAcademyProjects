@@ -33,6 +33,46 @@ class ModelBase
     SQL
     Object.const_get(name).new(result.first)
   end
+
+  def save(table)
+    args = self.instance_variables.map { |var| self.instance_variable_get(var) }
+
+    if self.id
+      update(table, *args)
+    else
+      insert(table, *args)
+    end
+  end
+
+  private
+  def insert(table, *args)
+    instance_vars = self.instance_variables
+    ln = instance_vars.length
+    vars = "(#{instance_vars.join(", ").split('@').join})"
+    vals = "(#{instance_vars.map{|var| "?"}.join(", ")})"
+
+    QuestionsDatabase.instance.execute(<<-SQL, *args)
+    INSERT INTO
+      #{table} #{vars}
+    VALUES
+      #{vals}
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  end
+
+  def update(table, *args)
+    instance_vars = self.instance_variables[1..-1]
+    vars = "#{instance_vars.join(" = ?, ").split('@').join} = ?"
+
+    QuestionsDatabase.instance.execute(<<-SQL, *args.rotate(1))
+    UPDATE
+      #{table}
+    SET
+      #{vars}
+    WHERE
+      id = ?
+    SQL
+  end
 end
 
 class Question < ModelBase
@@ -93,35 +133,7 @@ class Question < ModelBase
   end
 
   def save
-    if self.id
-      update
-    else
-      insert
-    end
-  end
-
-  private
-  def insert
-    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id)
-    INSERT INTO
-      questions (title, body, author_id)
-    VALUES
-      (?, ?, ?)
-    SQL
-    @id = QuestionsDatabase.instance.last_insert_row_id
-  end
-
-  def update
-    QuestionsDatabase.instance.execute(<<-SQL, self.title, self.body, self.author_id, self.id)
-    UPDATE
-      questions
-    SET
-      title = ?,
-      body = ?,
-      author_id = ?
-    WHERE
-      id = ?
-    SQL
+    super(TABLE_NAME)
   end
 end
 
@@ -193,36 +205,7 @@ class Reply < ModelBase
   end
 
   def save
-    if self.id
-      update
-    else
-      insert
-    end
-  end
-
-  private
-  def insert
-    QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.parent_id, self.user_id, self.body)
-    INSERT INTO
-      replies (question_id, parent_id, user_id, body)
-    VALUES
-      (?, ?, ?, ?)
-    SQL
-    @id = QuestionsDatabase.instance.last_insert_row_id
-  end
-
-  def update
-    QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.parent_id, self.user_id, self.body, self.id)
-    UPDATE
-      replies 
-    SET
-      question_id = ?, 
-      parent_id = ?, 
-      user_id = ?, 
-      body = ?
-    WHERE
-      id = ?
-    SQL
+    super(TABLE_NAME)
   end
 end
 
@@ -302,34 +285,7 @@ class User < ModelBase
   end
 
   def save
-    if self.id
-      update
-    else
-      insert
-    end
-  end
-
-  private
-  def insert
-    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname)
-    INSERT INTO
-      users (fname, lname)
-    VALUES
-      (?, ?)
-    SQL
-    @id = QuestionsDatabase.instance.last_insert_row_id
-  end
-
-  def update
-    QuestionsDatabase.instance.execute(<<-SQL, self.fname, self.lname, self.id)
-    UPDATE
-      users 
-    SET
-      fname = ?, 
-      lname = ?
-    WHERE
-      id = ?
-    SQL
+    super(TABLE_NAME)
   end
 end
 
@@ -525,13 +481,13 @@ def test
   new_u.save
   User.all
 
-  p QuestionFollow.all
+  QuestionFollow.all
   QuestionFollow.followers_for_question(2)
   QuestionFollow.followed_questions_for_user(1)
   QuestionFollow.most_followed_question(2)
   new_qf = QuestionFollow.new('question_id' => '5', 'user_id' => '1')
 
-  p QuestionLike.all
+  QuestionLike.all
   QuestionLike.likers_for_question_id(1)
   QuestionLike.num_likes_for_question_id(1)
   QuestionLike.liked_questions_for_user_id(5)
