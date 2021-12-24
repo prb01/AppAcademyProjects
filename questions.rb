@@ -191,6 +191,39 @@ class Reply
     end
     replies
   end
+
+  def save
+    if self.id
+      update
+    else
+      insert
+    end
+  end
+
+  private
+  def insert
+    QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.parent_id, self.user_id, self.body)
+    INSERT INTO
+      replies (question_id, parent_id, user_id, body)
+    VALUES
+      (?, ?, ?, ?)
+    SQL
+    @id = QuestionsDatabase.instance.last_insert_row_id
+  end
+
+  def update
+    QuestionsDatabase.instance.execute(<<-SQL, self.question_id, self.parent_id, self.user_id, self.body, self.id)
+    UPDATE
+      replies 
+    SET
+      question_id = ?, 
+      parent_id = ?, 
+      user_id = ?, 
+      body = ?
+    WHERE
+      id = ?
+    SQL
+  end
 end
 
 class User
@@ -451,6 +484,11 @@ def test
   r.question
   r.child_replies
   new_r = Reply.new('question_id' => '1', 'parent_id' => '2', 'user_id' => '4', 'body' => 'new new reply')
+  new_r.save
+  Reply.all
+  new_r.body = 'updated reply to the new reply'
+  new_r.save
+  Reply.all
 
   User.all
   User.find_by_id(1)
