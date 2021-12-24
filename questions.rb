@@ -221,6 +221,32 @@ class User
   def liked_questions
     QuestionLike.liked_questions_for_user_id(self.id)
   end
+
+  def average_karma_ruby
+    likes = 0.0
+    questions = authored_questions
+    questions.each { |q| likes += q.num_likes }
+    likes / questions.length
+  end
+
+  def average_karma
+    karma = QuestionsDatabase.instance.execute(<<-SQL, self.id)
+    SELECT
+      (CAST(SUM(count_of_likes) AS FLOAT) /  COUNT(id)) AS avg_karma
+    FROM
+      (SELECT
+        q.id, COALESCE(COUNT(ql.user_id), 0) AS count_of_likes
+      FROM
+        questions q
+      LEFT OUTER JOIN
+        question_likes ql ON (q.id = ql.question_id)
+      WHERE
+        q.author_id = ?
+      GROUP BY
+        q.id)
+    SQL
+    karma.first['avg_karma']
+  end
 end
 
 class QuestionFollow
@@ -395,6 +421,7 @@ def test
   u.authored_replies
   u.followed_questions
   u.liked_questions
+  p u.average_karma
   new_u = User.new('fname' => 'New', 'lname' => 'User')
 
   QuestionFollow.all
