@@ -34,12 +34,18 @@ class ModelBase
     Object.const_get(name).new(result.first)
   end
 
-  def self.where
+  def self.where(options)
+    where_clause = []
+    options.each { |k,v| where_clause << "#{k} = '#{v}'" }
+    where_str = where_clause.join(", ")
+
     results = QuestionsDatabase.instance.execute(<<-SQL)
     SELECT
       *
     FROM
       #{self.table_name}
+    WHERE
+      #{where_str}
     SQL
     results.map { |options| Object.const_get(name).new(options) }
   end
