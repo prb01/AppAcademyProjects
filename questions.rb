@@ -35,9 +35,13 @@ class ModelBase
   end
 
   def self.where(options)
-    where_clause = []
-    options.each { |k,v| where_clause << "#{k} = '#{v}'" }
-    where_str = where_clause.join(" AND ")
+    if options.is_a?(String)
+      where_str = options
+    else
+      where_clause = []
+      options.each { |k,v| where_clause << "#{k} = '#{v}'" }
+      where_str = where_clause.join(" AND ")
+    end
     
     results = QuestionsDatabase.instance.execute(<<-SQL)
     SELECT
@@ -473,6 +477,8 @@ def test
   new_u.fname = 'Updated'
   new_u.save
   User.all
+  User.where("lname = 'Bergstroem'")
+  User.where("lname LIKE 'Smi%'")
 
   QuestionFollow.all
   QuestionFollow.followers_for_question(2)
