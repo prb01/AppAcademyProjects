@@ -37,8 +37,8 @@ class ModelBase
   def self.where(options)
     where_clause = []
     options.each { |k,v| where_clause << "#{k} = '#{v}'" }
-    where_str = where_clause.join(", ")
-
+    where_str = where_clause.join(" AND ")
+    
     results = QuestionsDatabase.instance.execute(<<-SQL)
     SELECT
       *
@@ -48,6 +48,10 @@ class ModelBase
       #{where_str}
     SQL
     results.map { |options| Object.const_get(name).new(options) }
+  end
+
+  class <<self
+    alias_method :find_by, :where
   end
 
   def save
@@ -435,6 +439,9 @@ def test
   new_q.title = 'Updated title'
   new_q.save
   Question.all
+  Question.where({id: 5})
+  Question.where({title: "What is love?"})
+  Question.find_by(id: 5, author_id: 4, title: 'NULL body?')
 
   Reply.all
   Reply.find_by_id(1)
