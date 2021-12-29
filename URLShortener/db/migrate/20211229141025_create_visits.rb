@@ -3,7 +3,7 @@ class CreateVisits < ActiveRecord::Migration[5.2]
     create_table :visits do |t|
       t.integer :num_visits, null: false
       t.integer :url_id, null: false
-      t.integer :user_id null: false
+      t.integer :user_id, null: false
 
       t.timestamps
     end
