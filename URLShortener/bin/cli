@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+begin
+  puts "Please enter your email"
+  print "> "
+  email = gets.chomp
+  user = User.find_by(email: email)
+
+  raise ArgumentError.new("Please enter valid email (or 'X' to exit)") unless user
+rescue => e
+  puts e.message
+  retry unless email == "X"
+end
+
+exit if email == "X"
+
+begin
+  print "\n"
+  puts "What do you want to do?"
+  puts "0. Create shortened URL"
+  puts "1. Visit shortened URL"
+  print "> "
+  answer = gets.chomp.to_i
+
+  unless [0, 1].include?(answer)
+    raise ArgumentError.new("Please choose option 0 or 1 (or 'X' to exit)")
+  end
+rescue => e
+  puts e.message
+  retry unless answer == "X"
+end
+
+case answer
+when 0
+  print "\n"
+  puts "Please type in your URL"
+  print "> "
+  url = gets.chomp
+  shortened_url = ShortenedUrl.create!(user, url)
+
+  print "\n"
+  print "Short URL is: #{shortened_url.short_url}\n"
+when 1
+  begin
+    print "\n"
+    puts "Please enter your shortened URL"
+    print "> "
+    url = ShortenedUrl.find_by(short_url: gets.chomp)
+
+    raise ArgumentError.new("Shortened URL does not exist") unless url
+  rescue => e
+    puts e.message
+  end
+
+  print "\n"
+  puts "Launching #{url.long_url}"
+  Visit.record_visit!(user, url)
+  Launchy.open(url.long_url)
+else
+  exit
+end
+
+puts "Ciao!"
