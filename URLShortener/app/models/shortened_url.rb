@@ -19,6 +19,16 @@ class ShortenedUrl < ApplicationRecord
     through: :visits,
     source: :visitor
 
+  has_many :taggings,
+    class_name: 'Tagging',
+    primary_key: :id,
+    foreign_key: :url_id
+
+  has_many :tag_topics,
+    through: :taggings,
+    source: :tag_topic
+
+
   def self.random_code
     url = nil
     while !url || ShortenedUrl.exists?(short_url: url)
