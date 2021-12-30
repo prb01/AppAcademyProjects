@@ -3,6 +3,14 @@ require 'securerandom'
 class ShortenedUrl < ApplicationRecord
   validates :long_url, :short_url, :user_id, presence: true
   validates :short_url, uniqueness: true
+  validate :no_spamming
+
+  def no_spamming
+    # cannot submit more than 5 URLs in a single minute
+    if ShortenedUrl.last(5).first.created_at >= 1.minute.ago
+      errors[:base] << 'Cannot submit more than 5 URLs within 1 minute'
+    end
+  end
 
   belongs_to :submitter,
     class_name: 'User',
@@ -27,7 +35,6 @@ class ShortenedUrl < ApplicationRecord
   has_many :tag_topics,
     through: :taggings,
     source: :tag_topic
-
 
   def self.random_code
     url = nil
