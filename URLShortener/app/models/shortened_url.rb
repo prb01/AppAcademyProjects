@@ -8,7 +8,9 @@ class ShortenedUrl < ApplicationRecord
 
   def no_spamming
     # cannot submit more than 5 URLs in a single minute
-    if self.submitter.submitted_urls.last(5).first.created_at >= 1.minute.ago
+    record = self.submitter.submitted_urls.last(5)
+
+    if record.count == 5 && record.first.created_at >= 1.minute.ago
       errors[:base] << 'Cannot submit more than 5 URLs within 1 minute'
     end
   end
@@ -59,6 +61,16 @@ class ShortenedUrl < ApplicationRecord
       short_url: ShortenedUrl.random_code,
       user_id: user.id)
     shortened_url.save!
+    shortened_url
+  end
+
+  def self.prune(n)
+    prune_urls = ShortenedUrl.left_joins(:visits).group(:id).having("MAX(visits.created_at) <= ? OR MAX(visits.created_at) IS NULL", n.minutes.ago)
+    prune_urls.each do |url| 
+      url.visits.destroy
+      url.taggings.destroy
+    end
+    prune_urls.destroy_all
   end
 
   def num_clicks
