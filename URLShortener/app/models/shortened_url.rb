@@ -19,6 +19,7 @@ class ShortenedUrl < ApplicationRecord
     # cannot submit more than 5 urls if not premium user
     num_submitted = self.submitter.submitted_urls.count
     prem_status = self.submitter.premium
+    
     unless prem_status || num_submitted <= 5
       errors[:base] << 'No pay, no play (max 5 submissions)'
     end
@@ -65,10 +66,10 @@ class ShortenedUrl < ApplicationRecord
   end
 
   def self.prune(n)
-    prune_urls = ShortenedUrl.left_joins(:visits).group(:id).having("MAX(visits.created_at) <= ? OR MAX(visits.created_at) IS NULL", n.minutes.ago)
+    prune_urls = ShortenedUrl.joins(:submitter).left_joins(:visits).where("users.premium = false").group(:id).having("MAX(visits.created_at) <= ? OR MAX(visits.created_at) IS NULL", n.minutes.ago)
     prune_urls.each do |url| 
-      url.visits.destroy
-      url.taggings.destroy
+      url.visits.destroy_all
+      url.taggings.destroy_all
     end
     prune_urls.destroy_all
   end
