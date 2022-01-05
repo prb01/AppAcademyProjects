@@ -19,6 +19,10 @@ class Response < ApplicationRecord
     foreign_key: :user_id,
     primary_key: :id
 
+  has_one :poll,
+    through: :question,
+    source: :poll
+
   def sibling_responses
     self.question.responses.where.not(id: self.id)
   end
