@@ -11,4 +11,10 @@ class AnswerChoice < ApplicationRecord
     class_name: :Response,
     primary_key: :id,
     foreign_key: :answer_choice_id
+
+  def self.no_responses
+    AnswerChoice
+      .left_joins(:responses)
+      .where('responses.id IS NULL') 
+    end
 end
