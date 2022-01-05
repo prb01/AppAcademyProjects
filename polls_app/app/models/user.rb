@@ -17,19 +17,19 @@ class User < ApplicationRecord
     source: :poll
 
   def completed_polls
-     user_polls_ids = self.polls_responded.pluck(:id)
-
-    Poll
-      .joins(:questions)
-      .left_joins(:responses)
-      .where(id: user_polls_ids)
-      .where(responses: { user_id: self.id })
-      .group(:id)
+    polls_with_qs_responses
       .having('COUNT(DISTINCT questions.id) = COALESCE(COUNT(DISTINCT responses.id),0)')
   end
 
   def uncompleted_polls
-     user_polls_ids = self.polls_responded.pluck(:id)
+    polls_with_qs_responses
+      .having('COUNT(DISTINCT questions.id) != COALESCE(COUNT(DISTINCT responses.id),0)')
+      .having('COALESCE(COUNT(DISTINCT responses.id),0) > 0')
+  end
+
+  private
+  def polls_with_qs_responses
+    user_polls_ids = self.polls_responded.pluck(:id)
 
     Poll
       .joins(:questions)
@@ -37,6 +37,5 @@ class User < ApplicationRecord
       .where(id: user_polls_ids)
       .where(responses: { user_id: self.id })
       .group(:id)
-      .having('COUNT(DISTINCT questions.id) != COALESCE(COUNT(DISTINCT responses.id),0) AND COALESCE(COUNT(DISTINCT responses.id),0) > 0')
   end
 end
