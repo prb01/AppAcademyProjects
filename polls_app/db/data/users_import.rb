@@ -1,0 +1,12 @@
+User.import(
+    [:username],
+    [['Patrick'],
+    ['Boris'],
+    ['Caro'],
+    ['Denny'],
+    ['Jonny'],
+    ['caro_clone_1'],
+    ['caro_clone_2'],
+    ['denny_clone_1'],
+    ['jonny_clone_1']]
+  )

@@ -44,6 +44,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'db-query-matchers'
   gem 'pry-rails'
+  gem 'activerecord-import'
 end
 
 group :development do
