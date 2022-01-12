@@ -6,8 +6,8 @@ class User < ApplicationRecord
     primary_key: :id,
     foreign_key: :artist_id
 
-  has_many :viewers,
+  has_many :shared_viewers,
     -> { distinct },
     through: :artworks,
-    source: :viewers
+    source: :shared_viewers
 end
