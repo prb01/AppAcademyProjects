@@ -8,12 +8,17 @@ class User < ApplicationRecord
     dependent: :destroy
 
   has_many :artwork_shares,
-    through: :artworks,
-    source: :artwork_shares,
-    dependent: :destroy
+    class_name: 'ArtworkShare',
+    primary_key: :id,
+    foreign_key: :viewer_id
 
   has_many :shared_viewers,
     -> { distinct },
     through: :artworks,
     source: :shared_viewers
+
+  has_many :viewed_artworks,
+    through: :artwork_shares,
+    source: :artwork
+
 end

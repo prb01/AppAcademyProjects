@@ -1,6 +1,7 @@
 class ArtworksController < ApplicationController
   def index
-    render json: Artwork.all
+    return unless artist = get_user
+    render json: artist.artworks + artist.viewed_artworks
   end
 
   def show
@@ -39,6 +40,15 @@ class ArtworksController < ApplicationController
   end
 
   private
+
+  def get_user
+    unless user = User.find_by_id(params[:user_id])
+      render json: ["Unable to find user"], status: :unprocessable_entity
+      return false
+    end
+
+    user
+  end
 
   def get_artwork
     unless artwork = Artwork.find_by_id(params[:id])
