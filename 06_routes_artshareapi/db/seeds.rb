@@ -9,10 +9,12 @@
 User.destroy_all
 Artwork.destroy_all
 ArtworkShare.destroy_all
+Comment.destroy_all
 
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('artworks')
 ApplicationRecord.connection.reset_pk_sequence!('artwork_shares')
+ApplicationRecord.connection.reset_pk_sequence!('comments')
 
 puts "create artists"
 a1 = User.create(username: 'PabloPicasso')
@@ -42,3 +44,13 @@ ArtworkShare.create(artwork_id: 3, viewer_id: a4.id)
 
 ArtworkShare.create(artwork_id: 3, viewer_id: a5.id)
 ArtworkShare.create(artwork_id: 5, viewer_id: a5.id)
+
+puts "create comments"
+Comment.create(user_id: a5.id, artwork_id: 1, body: 'Surreal painting')
+Comment.create(user_id: a5.id, artwork_id: 5, body: 'Bobb Ross is the best!')
+
+Comment.create(user_id: a4.id, artwork_id: 1, body: 'Really is surreal. Amazing!')
+Comment.create(user_id: a4.id, artwork_id: 1, body: 'Can\'t wait to buy it!')
+Comment.create(user_id: a4.id, artwork_id: 5, body: 'Happy treeeees!')
+
+Comment.create(user_id: a3.id, artwork_id: 2, body: 'Pablo is the GOAT')
