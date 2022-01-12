@@ -1,6 +1,14 @@
 class CommentsController < ApplicationController
   def index
-    render json: Comment.all
+    if params[:user_id]
+      return unless user = get_user
+      render json: user.comments
+    elsif params[:artwork_id]
+      return unless artwork = get_artwork
+      render json: artwork.comments
+    else
+      render json: Comment.all
+    end
   end
 
   def create
@@ -32,6 +40,24 @@ class CommentsController < ApplicationController
     end
 
     comment
+  end
+
+  def get_user
+    unless user = User.find_by_id(params[:user_id])
+      render json: ["Unable to find user"], status: :unprocessable_entity
+      return false
+    end
+
+    user
+  end
+
+  def get_artwork
+    unless artwork = Artwork.find_by_id(params[:artwork_id])
+      render json: ["Unable to find artwork"], status: :unprocessable_entity
+      return false
+    end
+
+    artwork
   end
 
   def comment_params

@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   def index
-    render json: User.all
+    if params[:search]
+      query = "%#{params[:search].upcase}%"
+      render json: User.where('UPPER(username) LIKE ?', query)
+    else
+      render json: User.all
+    end
   end
 
   def show
