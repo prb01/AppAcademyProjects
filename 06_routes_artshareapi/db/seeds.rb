@@ -54,3 +54,21 @@ Comment.create(user_id: a4.id, artwork_id: 1, body: 'Can\'t wait to buy it!')
 Comment.create(user_id: a4.id, artwork_id: 5, body: 'Happy treeeees!')
 
 Comment.create(user_id: a3.id, artwork_id: 2, body: 'Pablo is the GOAT')
+
+puts "create likes for artwork"
+Like.create(artwork_id: 1, user_id: a3.id)
+Like.create(artwork_id: 2, user_id: a3.id)
+Like.create(artwork_id: 3, user_id: a3.id)
+Like.create(artwork_id: 1, user_id: a4.id)
+Like.create(artwork_id: 2, user_id: a4.id)
+Like.create(artwork_id: 1, user_id: a5.id)
+Like.create(artwork_id: 5, user_id: a5.id)
+
+puts "create likes for comments"
+Like.create(comment_id: 1, user_id: a3.id)
+Like.create(comment_id: 2, user_id: a3.id)
+Like.create(comment_id: 3, user_id: a3.id)
+Like.create(comment_id: 1, user_id: a4.id)
+Like.create(comment_id: 2, user_id: a4.id)
+Like.create(comment_id: 1, user_id: a5.id)
+Like.create(comment_id: 5, user_id: a5.id)
