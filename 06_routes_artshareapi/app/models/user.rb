@@ -32,4 +32,12 @@ class User < ApplicationRecord
     primary_key: :id,
     foreign_key: :user_id,
     dependent: :destroy
+
+  has_many :liked_comments,
+    through: :likes,
+    source: :comment
+
+  has_many :liked_artworks,
+    through: :likes,
+    source: :artwork
 end

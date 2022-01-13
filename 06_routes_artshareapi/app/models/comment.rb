@@ -9,4 +9,8 @@ class Comment < ApplicationRecord
     primary_key: :id,
     foreign_key: :comment_id,
     dependent: :destroy
+  
+  has_many :user_likes,
+    through: :likes,
+    source: :user
 end
