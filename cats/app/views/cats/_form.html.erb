@@ -1,0 +1,46 @@
+<% action_url = action == "new" ? cats_url(cat) : cat_url(cat) %>
+<form action="<%= action_url %>" method="post">
+  <% if action == "edit" %>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+
+  <b><label for="cat_name">Name:</label></b>
+  <input type="text" name="cat[name]" id="cat_name"
+  value="<%= action == 'edit' ? cat.name : "" %>">
+  <br>
+
+  <b><label for="cat_sex">Sex:</label></b>
+  <label for="M">M</label>
+  <input type="radio" name="cat[sex]" id="M" value="M"
+   <%= cat.sex == 'M' ? "checked" : "" %>>
+  <label for="F">F</label>
+  <input type="radio" name="cat[sex]" id="F" value="F"
+  <%= cat.sex == 'F' ? "checked" : "" %>>
+  <br>
+
+  <b><label for="cat_birth_date">Birth Date:</label></b>
+  <input type="date" name="cat[birth_date]" id="cat_birth_date"
+  value="<%= cat.birth_date %>">
+  <br>
+
+  <b><label for="cat_color">Color:</label></b>
+    <select name="cat[color]" id="cat_color">
+        <option value="" disabled hidden
+        <%= action == 'edit' ? "" : "selected" %>>Choose color</option>
+      <% colors.each do |color| %>
+        <option value="<%= color %>"
+        <%= cat.color == color ? "selected" : "" %>>
+        <%= color.capitalize %></option>
+      <% end %>
+    </select>
+  <br>
+
+  <b><label for="cat_description">Description:</label></b>
+  <br>
+  <textarea name="cat[description]" id="cat_description" cols="30" rows="10">
+  <%= cat.description %>
+  </textarea>
+  <br>
+
+  <input type="submit" value="Submit">
+</form>

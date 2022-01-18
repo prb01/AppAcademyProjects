@@ -14,9 +14,15 @@ class Cat < ApplicationRecord
     "fawn",
     "mixed"
   ]
+
   validates :name, :sex, :birth_date, :color, presence: true
   validates :color, inclusion: { in: COLORS }
   validates :sex, inclusion: { in: %w(M F) }
+
+  
+  def self.colors
+    COLORS
+  end
 
   def age
     time_ago_in_words(self.birth_date) 
