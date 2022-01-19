@@ -1,13 +1,19 @@
-<table>
-  <tr>
-    <thead><th><b><%= link_to cat.name, cat_url(cat) %></b></th></thead>
-  </tr>
-  <tr>
-    <tr><td><b>Sex: </b></td><td><%= cat.sex %></td></tr>
-    <tr><td><b>Age: </b></td><td><%= cat.age %></td></tr>
-    <tr><td><b>Color: </b></td><td><%= cat.color %></td></tr>
-  </tr>
-  <tr>
-  <td colspan="2"><%= cat.description %></td>
-  </tr>
-</table>
+  <h2><b><%= link_to cat.name, cat_url(cat) %></b></h2>
+  <table>
+    <tr>
+      <thead><th>Attribute</th><th>Value</th></thead>
+    </tr>
+    <tr>
+      <tr><td><b>Sex </b></td><td><%= cat.sex %></td></tr>
+      <tr><td><b>Age </b></td><td><%= cat.age %></td></tr>
+      <tr><td><b>Color </b></td><td><%= cat.color %></td></tr>
+    </tr>
+    <tr>
+      <td colspan="2"><%= cat.description %></td>
+    </tr>
+  </table>
+  <br>
+
+  <% if action && action == 'show' %>
+    <%= render 'rentals', cat: cat %>
+  <% end %>

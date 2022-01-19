@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <th>Start date:</th>
+    <th>End date:</th>
+  </tr>
+  <% cat.rental_requests.each do |rental| %>
+  <tr>
+    <td><%= rental.start_date %></td>
+    <td><%= rental.end_date %></td>
+  </tr>
+  <% end %>
+<table>
