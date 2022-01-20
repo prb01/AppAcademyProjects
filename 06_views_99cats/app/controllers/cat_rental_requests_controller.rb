@@ -12,7 +12,8 @@ class CatRentalRequestsController < ApplicationController
     if @cr.save
       redirect_to cat_url(@cr.cat)
     else
-      redirect_to new_cat_url
+      flash.now[:errors] = @cr.errors.full_messages
+      redirect_to new_cat_rental_request_url
     end
   end
 
