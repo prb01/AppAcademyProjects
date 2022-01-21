@@ -16,7 +16,11 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by(session_token: session[:session_token])
   end
 
-  def require_no_session!
+  def require_no_user!
     redirect_to cats_url unless current_user.nil?
+  end
+
+  def require_user!
+    redirect_to cats_url if current_user.nil?
   end
 end
