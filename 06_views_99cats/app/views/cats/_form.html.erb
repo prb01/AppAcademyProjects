@@ -1,5 +1,10 @@
 <% action_url = action == "new" ? cats_url(cat) : cat_url(cat) %>
 <form action="<%= action_url %>" method="post">
+  <input
+      type="hidden"
+      name="authenticity_token"
+      value="<%= form_authenticity_token %>">
+      
   <% if action == "edit" %>
     <input type="hidden" name="_method" value="PATCH">
   <% end %>

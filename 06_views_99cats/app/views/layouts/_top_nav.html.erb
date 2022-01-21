@@ -1,0 +1,13 @@
+<nav class="main-nav">
+  <h1><a href="/cats">99 Cats</a></h1>
+  <div>
+    <% if !current_user.nil? %>
+      <%= link_to 'Request Rental', new_cat_rental_request_url %>
+      <%= link_to 'Logout', session_url, method: :delete %>
+      <%= current_user.username %>
+    <% else %>
+      <%= link_to 'Sign In', new_session_url %>
+      <%= link_to 'Sign Up', new_user_url %>
+    <% end %>
+  </div>
+</nav>
