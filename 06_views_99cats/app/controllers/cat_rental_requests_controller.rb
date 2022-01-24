@@ -1,4 +1,5 @@
 class CatRentalRequestsController < ApplicationController
+  before_action :require_user!
   before_action :require_owner!, only: [:approve, :deny]
 
   def new
