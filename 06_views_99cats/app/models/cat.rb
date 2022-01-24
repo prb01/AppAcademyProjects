@@ -38,4 +38,8 @@ class Cat < ApplicationRecord
   def age
     time_ago_in_words(self.birth_date) 
   end
+
+  def rental_requests_and_name
+    self.rental_requests.includes(:renter)
+  end
 end

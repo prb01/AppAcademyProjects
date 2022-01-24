@@ -5,7 +5,7 @@
     <th>End date</th>
     <th>Status</th>
   </tr>
-  <% cat.rental_requests.each do |rental| %>
+  <% cat.rental_requests_and_name.each do |rental| %>
   <tr>
     <td><%= rental.renter.username %></td>
     <td><%= rental.start_date %></td>
