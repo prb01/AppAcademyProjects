@@ -1,10 +1,14 @@
 class CatRentalRequest < ApplicationRecord
-  validates :cat_id, :start_date, :end_date, :status, presence: true
+  validates :cat_id, :start_date, :end_date, :status, :user_id, presence: true
   validates :status, inclusion: { in: %w(PENDING APPROVED DENIED) }
   validate :does_not_overlap_approved_requests
   validate :end_date_after_start_date
 
   belongs_to :cat
+  belongs_to :renter,
+    class_name: 'User',
+    primary_key: :id,
+    foreign_key: :user_id
 
   def overlapping_requests
     CatRentalRequest

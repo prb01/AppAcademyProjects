@@ -10,6 +10,7 @@ class CatRentalRequestsController < ApplicationController
 
   def create
     @cr = CatRentalRequest.new(cr_params)
+    @cr.user_id = current_user.id
     
     if @cr.save
       redirect_to cat_url(@cr.cat)
@@ -40,6 +41,6 @@ class CatRentalRequestsController < ApplicationController
   end
 
   def require_owner!
-    redirect_to cats_url unless current_user.cat_rental_requests.where(id: params[:id]).first
+    redirect_to cats_url unless current_user.requests_to_rent_my_cat.where(id: params[:id]).first
   end
 end

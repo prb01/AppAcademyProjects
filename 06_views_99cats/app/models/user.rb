@@ -5,7 +5,8 @@ class User < ApplicationRecord
   before_validation :ensure_session_token
 
   has_many :cats
-  has_many :cat_rental_requests,
+  has_many :cat_rental_requests
+  has_many :requests_to_rent_my_cat,
     through: :cats,
     source: :rental_requests
 
