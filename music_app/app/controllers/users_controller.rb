@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
+  before_action :require_user!, only: [:show]
+
   def show
     @user = User.find_by(id: params[:id])
-    render json: @user.email.to_json
+    render :show
   end
 
   def new

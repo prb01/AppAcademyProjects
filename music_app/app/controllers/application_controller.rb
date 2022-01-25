@@ -25,4 +25,12 @@ class ApplicationController < ActionController::Base
   def user_params
     params.require(:user).permit(:email, :password)
   end
+
+  def require_user!
+    if current_user.id.to_s == params[:id]
+      return true
+    else
+      redirect_to new_session_url
+    end
+  end
 end
