@@ -16,5 +16,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    puts "WHAT THE FUCKfosjkgsklgdfj"
+    logout!
+    redirect_to new_session_url
   end
 end
