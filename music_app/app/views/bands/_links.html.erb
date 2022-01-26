@@ -1,5 +1,5 @@
 <% content_for :links do %>
-  <% if !new %>
+  <% if !new && current_user %>
     <li><%= button_to "New Album", new_band_album_url(@band), method: :get %></li>
     <li><%= button_to "Edit Band", edit_band_url, method: :get %></li>
     <li><%= button_to "Destroy Band", band_url, method: :delete %></li>

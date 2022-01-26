@@ -1,4 +1,6 @@
 class TracksController < ApplicationController
+  before_action :require_user!, except: [:index, :show]
+  
   def show
     @track = Track.find_by(id: params[:id])
     @album = @track.album

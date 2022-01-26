@@ -1,5 +1,7 @@
 <% content_for :links do %>
-  <li><%= button_to "Add Band", new_band_url, method: :get %></li>
+  <% if current_user %>
+    <li><%= button_to "Add Band", new_band_url, method: :get %></li>
+  <% end %>
 <% end %>
 
 <div>

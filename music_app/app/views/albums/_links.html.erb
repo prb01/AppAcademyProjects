@@ -1,10 +1,14 @@
 <% content_for :links do %>
-  <% if new %>
-    <li><%= button_to @band.name, band_url(@band), method: :get %></li>
+  <% if current_user %>
+    <% if new %>
+      <li><%= button_to @band.name, band_url(@band), method: :get %></li>
+    <% else %>
+      <li><%= button_to "New Track", new_album_track_url(@album), method: :get %></li>
+      <li><%= button_to "Edit Album", edit_album_url, method: :get %></li>
+      <li><%= button_to "Destroy Album", album_url, method: :delete %></li>
+      <li><%= button_to @album.band.name, band_url(@album.artist_id), method: :get %></li>
+    <% end %>
   <% else %>
-    <li><%= button_to "New Track", new_album_track_url(@album), method: :get %></li>
-    <li><%= button_to "Edit Album", edit_album_url, method: :get %></li>
-    <li><%= button_to "Destroy Album", album_url, method: :delete %></li>
     <li><%= button_to @album.band.name, band_url(@album.artist_id), method: :get %></li>
   <% end %>
 <% end %>

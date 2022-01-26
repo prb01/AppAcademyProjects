@@ -1,4 +1,6 @@
 class AlbumsController < ApplicationController
+  before_action :require_user!, except: [:index, :show]
+  
   def show
     @album = Album.find_by(id: params[:id])
     render :show

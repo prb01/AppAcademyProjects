@@ -1,5 +1,5 @@
 <% content_for :links do %>
-  <% if !new %>
+  <% if !new && current_user %>
     <li><%= button_to "Edit Track", edit_track_url, method: :get %></li>
     <li><%= button_to "Destroy Track", track_url, method: :delete %></li>
   <% end %>
