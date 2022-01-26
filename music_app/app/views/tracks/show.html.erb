@@ -18,3 +18,9 @@
 <p>
   ♫ <%= @track.lyrics %>
 </p>
+
+<br>
+<%= render 'notes/form', track: @track %>
+
+<br>
+<%= render 'notes/note', track: @track %>

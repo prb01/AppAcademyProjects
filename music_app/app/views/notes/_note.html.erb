@@ -1,0 +1,15 @@
+<div>
+  <h2>Notes</h2>
+</div>
+
+  <% track.notes.order(:id).each do |note| %>
+    <div class="note">
+      <%= note.body %>
+      <div class="note-author">
+        <%= "Author: #{note.user.email}" %>
+      </div>
+      <% if current_user && current_user.id == note.user.id %>
+        <%= button_to "Delete Note", note_url(note.id), method: :delete %>
+      <% end %>
+    </div>
+  <% end %>

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   validates :email, :session_token, uniqueness: true
   after_initialize :ensure_session_token
 
+  has_many :notes
+
   attr_reader :password
 
   def self.generate_token

@@ -1,0 +1,21 @@
+<div class="body-form">
+  <table>
+    <tr>
+      <th><h1>New Note</h1></th>
+    </tr>
+    <form action="<%= track_notes_url(track.id) %>" method="POST">
+      <%= auth_token %>
+
+      <tr>
+        <td>
+          <textarea name="note[body]" id="body" cols="20" rows="2">
+          </textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td><input type="submit" value="Add Note" class="btn-submit"></td>
+      </tr>
+    </form>
+  </table>
+</div>
