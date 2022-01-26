@@ -1,0 +1,9 @@
+<%= render 'links', new: true %>
+<%= render 'track_form', 
+  track: @track,
+  track_album: @album, 
+  albums: @albums, 
+  action_url: tracks_url, 
+  method: nil, 
+  header_text: "Add Track", 
+  submit_text: "Add" %>

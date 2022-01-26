@@ -5,6 +5,9 @@ class Album < ApplicationRecord
   belongs_to :band,
     foreign_key: :artist_id
 
+  has_many :tracks,
+    dependent: :destroy
+
   private
 
   def year_not_more_than_current_year

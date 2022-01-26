@@ -16,8 +16,8 @@
           <select name="album[artist_id]" id="artist">
             <option value="" hidden>--Please Select--</option>
             <% Band.all.each do |band| %>
-              <option value="<%= band.name %>" 
-                <%= "selected" if params[:band_id].to_i == band.id %>>
+              <option value="<%= band.id %>" 
+                <%= "selected" if album_band.id == band.id %>>
                 <%= band.name %>
               </option>
             <% end %>

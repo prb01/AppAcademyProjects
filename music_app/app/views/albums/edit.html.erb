@@ -1,1 +1,8 @@
-<%= render 'album_form', album: @album, action_url: album_url(@album), method: "PUT", header_text: "Add Album", submit_text: "Add" %>
+<%= render 'links', new: false %>
+<%= render 'album_form', 
+album: @album,
+album_band: @band, 
+action_url: album_url(@album), 
+method: "PUT", 
+header_text: "Add Album", 
+submit_text: "Add" %>

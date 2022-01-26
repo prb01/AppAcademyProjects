@@ -9,12 +9,12 @@
 User.destroy_all
 Band.destroy_all
 Album.destroy_all
-# Track.destroy_all
+Track.destroy_all
 
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('bands')
 ApplicationRecord.connection.reset_pk_sequence!('albums')
-# ApplicationRecord.connection.reset_pk_sequence!('tracks')
+ApplicationRecord.connection.reset_pk_sequence!('tracks')
 
 
 puts "create users"
@@ -46,5 +46,18 @@ a13 = Album.create(artist_id: b3.id, title: "10,000 Days", year: 2006)
 a14 = Album.create(artist_id: b3.id, title: "Fear Inoculum", year: 2019)
 
 
-# puts "create tracks"
+puts "create tracks"
+t1 = Track.create(album_id: a5.id, title: "Attack", ord: 1)
+t2 = Track.create(album_id: a5.id, title: "Dreaming", ord: 2)
+t3 = Track.create(album_id: a5.id, title: "Kill Rock 'n Roll", ord: 3)
+t4 = Track.create(album_id: a5.id, title: "Hypnotize", ord: 4)
+t5 = Track.create(album_id: a5.id, title: "Stealing Society", ord: 5)
+t6 = Track.create(album_id: a5.id, title: "Tentative", ord: 6)
+t7 = Track.create(album_id: a5.id, title: "U-Fig", ord: 7)
+t8 = Track.create(album_id: a5.id, title: "Holy Mountains", ord: 8)
+t9 = Track.create(album_id: a5.id, title: "Vicinity of Obscenity", ord: 9)
+t10 = Track.create(album_id: a5.id, title: "She's Like Heroin", ord: 10)
+t11 = Track.create(album_id: a5.id, title: "Lonely Day", ord: 11)
+t12 = Track.create(album_id: a5.id, title: "Soldier Side", ord: 12, bonus: true)
+
 

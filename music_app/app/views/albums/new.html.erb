@@ -1,1 +1,8 @@
-<%= render 'album_form', album: @album, action_url: albums_url, method: nil, header_text: "Add Album", submit_text: "Add" %>
+<%= render 'links', new: true %>
+<%= render 'album_form', 
+album: @album, 
+album_band: @band, 
+action_url: albums_url, 
+method: nil, 
+header_text: "Add Album", 
+submit_text: "Add" %>

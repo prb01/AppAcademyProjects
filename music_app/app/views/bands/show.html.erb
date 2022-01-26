@@ -1,9 +1,4 @@
-<% content_for :links do %>
-  <li><%= button_to "New Album", new_band_album_url(@band), method: :get %></li>
-  <li><%= button_to "Edit Band", edit_band_url, method: :get %></li>
-  <li><%= button_to "Destroy Band", band_url, method: :delete %></li>
-  <li><%= button_to "All Bands", bands_url, method: :get %></li>
-<% end %>
+<%= render 'links', new: false %>
 
 <div>
   <h2><%= @band.name %></h2>

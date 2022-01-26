@@ -1,0 +1,9 @@
+<%= render 'links', new: false %>
+<%= render 'track_form', 
+track: @track,
+track_album: @album, 
+albums: @albums, 
+action_url: track_url(@track), 
+method: "PUT", 
+header_text: "Edit Track", 
+submit_text: "Edit" %>

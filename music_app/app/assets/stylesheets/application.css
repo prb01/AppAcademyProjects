@@ -111,6 +111,12 @@ body h3 {
   color:#043f4e;
 }
 
+body h4 {
+  font-weight: 100;
+  font-size: 35px;
+  color:#043f4e;
+}
+
 body div {
   display: flex;
   justify-content: space-around;
@@ -131,7 +137,13 @@ table td {
   padding: 1px;
 }
 
-table input, select {
+textarea {
+  text-align: left;
+  padding: 10px;
+  resize: none;
+}
+
+table input, select, textarea {
   background-color: white;
   border: 0;
   margin: 1px;

@@ -1,0 +1,8 @@
+<% content_for :links do %>
+  <% if !new %>
+    <li><%= button_to "Edit Track", edit_track_url, method: :get %></li>
+    <li><%= button_to "Destroy Track", track_url, method: :delete %></li>
+  <% end %>
+
+  <li><%= button_to @album.title, album_url(@album), method: :get %></li>
+<% end %>
