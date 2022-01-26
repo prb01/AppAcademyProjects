@@ -1,0 +1,16 @@
+<% content_for :links do %>
+  <li><%= button_to "New Album", "/new_album_url", method: :get %></li>
+  <li><%= button_to "Edit Band", edit_band_url, method: :get %></li>
+  <li><%= button_to "Destroy Band", band_url, method: :delete %></li>
+  <li><%= button_to "All Bands", bands_url, method: :get %></li>
+<% end %>
+
+<div>
+  <h2><%= @band.name %></h2>
+</div>
+
+<ul>
+  <%# @albums.each do |album| %>
+    <li class="music-links"><%#= link_to album.name, album_url(album) %></li>
+  <%# end %>
+</ul>

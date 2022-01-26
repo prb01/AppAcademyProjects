@@ -1,0 +1,24 @@
+<div class="body-form">
+  <table>
+    <tr>
+      <th colspan="2"><h1><%= header_text %></h1></th>
+    </tr>
+    <form action="<%= action_url %>" method="POST">
+      <%= auth_token %>
+
+      <% if method %>
+        <input type="hidden" name="_method" value="<%= method %>">
+      <% end %>
+
+      <tr>
+        <td class="align-right"><label for="name">Artist:</label></td>
+        <td class="align-left"><input type="text" name="band[name]" id="name"
+          value="<%= band.name if band %>"></td>
+      </tr>
+
+      <tr>
+        <td colspan="2"><input type="submit" value="<%= submit_text %>" class="btn-submit"></td>
+      </tr>
+    </form>
+  </table>
+</div>

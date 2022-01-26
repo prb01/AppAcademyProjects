@@ -1,5 +1,7 @@
 <header>
-    <%= link_to 'Music App', 'http://localhost:3000', class: 'main-logo' %>
+    <%= link_to 'Music App', 'http://localhost:3000/bands', class: 'main-logo' %>
+
+    <ul class="nav_links" id="page-links"><%= yield :links %></ul>
 
     <ul class="nav_links">
       <% if logged_in? %>
