@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user!
-    if current_user.id.to_s == params[:id]
+    if current_user
       return true
     else
       redirect_to new_session_url
