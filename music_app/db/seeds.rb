@@ -20,9 +20,9 @@ ApplicationRecord.connection.reset_pk_sequence!('notes')
 
 
 puts "create users"
-u1 = User.create(email: 'belgic@email.com', password: 'password')
-u2 = User.create(email: 'bobby@email.com', password: 'password')
-u3 = User.create(email: 'caro@email.com', password: 'password')
+u1 = User.create(email: 'belgic@email.com', password: 'password', activated: true)
+u2 = User.create(email: 'bobby@email.com', password: 'password', activated: true)
+u3 = User.create(email: 'caro@email.com', password: 'password', activated: true)
 
 puts "create bands"
 b1 = Band.create(name: "System of a Down")

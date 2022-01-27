@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     session[:session_token] = nil
   end
 
+  def activated?(user)
+    user.activated
+  end
+
   def logged_in?
     !current_user.nil?
   end

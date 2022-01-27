@@ -7,8 +7,13 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(user_params)
 
     if @user
-      login!(@user)
-      redirect_to user_url(@user)
+      if activated?(@user)
+        login!(@user)
+        redirect_to user_url(@user)
+      else
+        flash.now[:errors] = ["Please confirm email before trying to login."]
+        render :new
+      end
     else
       flash.now[:errors] = ["Email/Password combo incorrect."]
       render :new

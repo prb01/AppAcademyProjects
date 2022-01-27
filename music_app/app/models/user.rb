@@ -3,7 +3,7 @@ class User < ApplicationRecord
   validates :password_digest, presence: { message: "Password can't be blank" }
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :email, :session_token, uniqueness: true
-  after_initialize :ensure_session_token
+  after_initialize :ensure_session_token, :ensure_activation_token
 
   has_many :notes
 
@@ -27,6 +27,10 @@ class User < ApplicationRecord
 
   def ensure_session_token
     self.session_token ||= User.generate_token
+  end
+
+  def ensure_activation_token
+    self.activation_token = User.generate_token
   end
 
   def password=(password)
