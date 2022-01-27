@@ -10,11 +10,13 @@ User.destroy_all
 Band.destroy_all
 Album.destroy_all
 Track.destroy_all
+Note.destroy_all
 
 ApplicationRecord.connection.reset_pk_sequence!('users')
 ApplicationRecord.connection.reset_pk_sequence!('bands')
 ApplicationRecord.connection.reset_pk_sequence!('albums')
 ApplicationRecord.connection.reset_pk_sequence!('tracks')
+ApplicationRecord.connection.reset_pk_sequence!('notes')
 
 
 puts "create users"
@@ -60,4 +62,6 @@ t10 = Track.create(album_id: a5.id, title: "She's Like Heroin", ord: 10)
 t11 = Track.create(album_id: a5.id, title: "Lonely Day", ord: 11)
 t12 = Track.create(album_id: a5.id, title: "Soldier Side", ord: 12, bonus: true)
 
-
+puts "create notes"
+n1 = Note.create(user_id: u1.id, track_id: t1.id, body: "SOAD rules!")
+n2 = Note.create(user_id: u2.id, track_id: t1.id, body: "Hope they tour soon. Wicked song")
