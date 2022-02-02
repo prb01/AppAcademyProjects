@@ -1,0 +1,29 @@
+<table>
+  <tr>
+    <td>Title</td>
+    <td><%= goal.title %></td>
+  </tr>
+
+  <tr>
+    <td>Private?</td>
+    <td><%= goal.private %></td>
+  </tr>
+
+  <tr>
+    <td>Completed?</td>
+    <td><%= goal.completed %></td>
+  </tr>
+
+  <tr>
+    <td>Details</td>
+    <td><%= goal.details %></td>
+  </tr>
+</table>
+
+<% if goal.completed %>
+  <%= button_to 'In Progress', toggle_completed_goal_url(goal), method: :post %>
+<% else %>
+  <%= button_to 'Completed', toggle_completed_goal_url(goal), method: :post %>
+<% end %>
+
+<%= button_to 'Destroy Goal', goal_url(goal), method: :delete %>

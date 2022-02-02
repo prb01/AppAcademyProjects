@@ -7,4 +7,8 @@ class Goal < ApplicationRecord
     self.completed = !self.completed
     self.save
   end
+
+  def private_goal?
+    self.private
+  end
 end
