@@ -59,5 +59,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "associations" do
+    it { should have_many(:goals) }
   end
 end
