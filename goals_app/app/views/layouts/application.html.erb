@@ -10,6 +10,20 @@
   </head>
 
   <body>
+    <h1>Goal Setting App</h1>
+
+    <% if logged_in? %>
+      <p>Hello, <%= current_user.email %></p>
+      <%= button_to 'Logout', session_url, method: :delete %>
+    <% else %>
+      <ul>
+        <li><%= link_to 'Sign up', new_user_url %></li>
+        <li><%= link_to 'Sign in', new_session_url %></li>
+      </ul>
+    <% end %>
+
     <%= yield %>
+
+    <%= render 'layouts/errors' %>
   </body>
 </html>

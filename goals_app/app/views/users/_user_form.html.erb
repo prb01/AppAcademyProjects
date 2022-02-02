@@ -1,0 +1,19 @@
+<table>
+  <form action="<%= action_url %>" method="POST" >
+    <%= auth_token %>
+
+    <tr>
+      <td><label for="email">Email</label></td>
+      <td><input type="text" name="user[email]" id="email"></td>
+    </tr>
+
+    <tr>
+      <td><label for="password">Password</label></td>
+      <td><input type="password" name="user[password]" id="password"></td>
+    </tr>
+
+    <tr>
+      <td colspan=2><input type="submit" value="<%= submit_btn %>"></td>
+    </tr>
+  </form>
+</table>
