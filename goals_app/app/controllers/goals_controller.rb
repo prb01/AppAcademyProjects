@@ -45,7 +45,7 @@ class GoalsController < ApplicationController
     @goal = Goal.find_by(id: params[:id])
     @goal.toggle_completed
     
-    redirect_back(fallback_location: user_url(@goal.user))
+    redirect_back fallback_location: user_url(@goal.user)
   end
 
   private

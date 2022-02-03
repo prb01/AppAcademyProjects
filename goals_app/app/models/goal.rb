@@ -1,8 +1,9 @@
 class Goal < ApplicationRecord
+  include Commentable
+
   validates :title, :user_id, presence: true
 
   belongs_to :user
-  has_many :comments, as: :commentable, dependent: :destroy
 
   def toggle_completed
     self.completed = !self.completed

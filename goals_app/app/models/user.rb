@@ -1,6 +1,8 @@
 require 'bcrypt'
 
 class User < ApplicationRecord
+  include Commentable
+  
   validates :email, :password_digest, :session_token, presence: true
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :email, :session_token, uniqueness: true

@@ -1,2 +1,10 @@
 <h2><%= @goal.user.email+"'s goal" %></h2>
 <%= render 'goal', goal: @goal%>
+
+<h3>Comments</h3>
+<%= render @goal.comments %>
+
+<% if logged_in? %>
+  <%= render 'comments/add_comment', 
+    action_url: goal_comments_url(@goal.id) %>
+<% end %>
