@@ -6,7 +6,13 @@ class User < ApplicationRecord
   validates :email, :session_token, uniqueness: true
   before_validation :ensure_session_token
 
-  has_many :goals
+  has_many :goals, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :authored_comments,
+    class_name: 'Comment',
+    primary_key: :id,
+    foreign_key: :author_id,
+    dependent: :destroy
 
   attr_reader :password
 
