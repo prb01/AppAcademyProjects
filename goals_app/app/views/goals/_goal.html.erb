@@ -1,41 +1,46 @@
-<table>
-  <tr>
-    <td>Title</td>
-    <td><%= goal.title %></td>
-  </tr>
+<% if goal_owner?(goal) || !goal.private %>
+  <table>
+    <tr>
+      <td>Title</td>
+      <td><%= link_to goal.title, goal_url(goal) %></td>
+    </tr>
 
-  <tr>
-    <td>Visibility</td>
-    <td>
-      <% if goal.private %>
-        Private
-      <% else %>
-        Public
-      <% end %>
-    </td>
-  </tr>
+    <tr>
+      <td>Visibility</td>
+      <td>
+        <% if goal.private %>
+          Private
+        <% else %>
+          Public
+        <% end %>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Status:</td>
-    <td>
-      <% if goal.completed %>
-        Completed
-      <% else %>
-        In Progress
-      <% end %>
-    </td>
-  </tr>
+    <tr>
+      <td>Status:</td>
+      <td>
+        <% if goal.completed %>
+          Completed
+        <% else %>
+          In Progress
+        <% end %>
+      </td>
+    </tr>
 
-  <tr>
-    <td>Details</td>
-    <td><%= goal.details %></td>
-  </tr>
-</table>
+    <tr>
+      <td>Details</td>
+      <td><%= goal.details %></td>
+    </tr>
+  </table>
 
-<% if goal.completed %>
-  <%= button_to 'In Progress', toggle_completed_goal_url(goal), method: :post %>
-<% else %>
-  <%= button_to 'Completed', toggle_completed_goal_url(goal), method: :post %>
+  <% if goal_owner?(goal) %>
+    <% if goal.completed %>
+      <%= button_to 'In Progress', toggle_completed_goal_url(goal), method: :post %>
+    <% else %>
+      <%= button_to 'Completed', toggle_completed_goal_url(goal), method: :post %>
+    <% end %>
+
+    <%= button_to 'Destroy Goal', goal_url(goal), method: :delete %>
+  <% end %>
+  <br>
 <% end %>
-
-<%= button_to 'Destroy Goal', goal_url(goal), method: :delete %>

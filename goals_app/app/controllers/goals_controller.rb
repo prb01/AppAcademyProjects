@@ -1,4 +1,8 @@
 class GoalsController < ApplicationController
+  before_action :require_user!, except: [:new, :show]
+  before_action :require_goal_owner_if_private!, only: [:show]
+  before_action :require_goal_owner!, only: [:destroy]
+
   def new
     render :new
   end

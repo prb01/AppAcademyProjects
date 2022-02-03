@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def goal_owner?(goal)
-    !current_user.goals.include?(goal).nil?
+    current_user.goals.include?(goal)
   end
 
   private
@@ -35,8 +35,12 @@ class ApplicationController < ActionController::Base
     redirect_to new_session_url unless current_user
   end
 
+  def require_goal_owner_if_private!
+    require_goal_owner! if Goal.find_by(id: params[:id]).private
+  end
+
   def require_goal_owner!
-    unless goal_owner?(Goal.find_by[id: params[:id]])
+    unless goal_owner?(Goal.find_by(id: params[:id]))
       redirect_back(fallback_location: new_session_url)
     end
   end
