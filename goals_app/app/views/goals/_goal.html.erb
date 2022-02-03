@@ -5,13 +5,25 @@
   </tr>
 
   <tr>
-    <td>Private?</td>
-    <td><%= goal.private %></td>
+    <td>Visibility</td>
+    <td>
+      <% if goal.private %>
+        Private
+      <% else %>
+        Public
+      <% end %>
+    </td>
   </tr>
 
   <tr>
-    <td>Completed?</td>
-    <td><%= goal.completed %></td>
+    <td>Status:</td>
+    <td>
+      <% if goal.completed %>
+        Completed
+      <% else %>
+        In Progress
+      <% end %>
+    </td>
   </tr>
 
   <tr>

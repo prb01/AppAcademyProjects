@@ -1,0 +1,35 @@
+<h2>Add new goal</h2>
+
+<form action="<%= goals_url %>" method="POST" >
+  <table>
+      <%= auth_token %>
+
+      <tr>
+        <td><label for="title">Title</label></td>
+        <td><input type="text" name="goal[title]" id="title"></td>
+      </tr>
+
+      <tr>
+        <td><label for="private">Private?</label></td>
+        <td><input type="checkbox" name="goal[private]" id="private"></td>
+      </tr>
+
+      <tr>
+        <td><label for="completed">Completed?</label></td>
+        <td><input type="checkbox" name="goal[completed]" id="completed"></td>
+      </tr>
+
+      <tr>
+        <td colspan=2><label for="details">Add details:</label></td>
+      </tr>
+      <tr>
+        <td colspan=2>
+          <textarea name="goal[details]" id="details" cols="35" rows="3"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan=2><input type="submit" value="Add goal"></td>
+      </tr>
+  </table>
+</form>
