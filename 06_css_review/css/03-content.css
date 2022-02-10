@@ -1,21 +1,33 @@
 /* PHASE 3: Content */
 
 .content {
+  display: flex;
+  justify-content: space-between;
+  width: 900px;
+  margin: auto;
 
+  background-color: #fff;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 .content-sidebar {
-
+  box-sizing: border-box;
+  width: 240px;
 }
 
 .content-main {
-
+  box-sizing: border-box;
+  width: 660px;
 }
 
 .content h1 {
-
+  font-size: 24px;
+  font-weight: 700;
+  margin: 20px;
 }
 
 .content p {
-
+  margin: 20px;
 }
