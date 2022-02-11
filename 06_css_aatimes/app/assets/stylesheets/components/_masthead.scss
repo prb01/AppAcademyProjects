@@ -4,12 +4,15 @@
 	align-items: center;
 	border-bottom: 2px solid black;
 	position: relative;
+
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 .language-nav {
 	position: absolute;
 	top: -15px;
-	left: calc(50% - (177.78px/2));
 	background: white;
 	border: 1px solid $light-gray;
 	border-bottom: none;
@@ -27,6 +30,10 @@
 	ul {
 		display: flex;
 	}
+
+	li:first-of-type {
+		font-weight: 700;
+	}
 }
 
 .logo {
@@ -41,9 +48,17 @@
 	margin-top: 10px;
 	margin-bottom: 10px;
 
+	ul {
+		display: flex;
+	}
+
 	li {
 		margin-left: 10px;
 		border-right: 1px solid $light-gray;
+	}
+
+	li:last-of-type {
+		border: 0;
 	}
 
 	button {

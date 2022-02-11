@@ -1,0 +1,44 @@
+<section class="masthead">
+  <nav class="language-nav">
+    <ul>
+      <li>
+        <a href="#">CSS</a>
+      </li>
+      <li>
+        <a href="#">HTML</a>
+      </li>
+      <li>
+        <a href="#">JavaScript</a>
+      </li>
+      <li>
+        <a href="#">Ruby</a>
+      </li>
+    </ul>
+  </nav>
+
+  <%= image_tag 'AA_Times_Logo.png', class: 'logo', alt: 'AA Times logo'%>
+
+  <nav class="masthead-links">
+    <ul>
+      <li>
+        <time datetime="<%= html_datetime_now %>">
+          <%= print_datetime_now %>
+        </time>
+      </li>
+      <li>
+        <i class="fas fa-newspaper"></i>
+        <a href="#">Today's Paper</a>
+      </li>
+      <li>
+        <i class="fas fa-video"></i>
+        <a href="#">Video</a>
+      </li>
+      <li>
+        <button>22°C</button>
+      </li>
+      <li>
+        <button>AAO <strong>+87%</strong></button>
+      </li>
+    </ul>
+  </nav>
+</section>
