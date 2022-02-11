@@ -18,6 +18,8 @@ feature 'Software Engineer' do
 
     scenario 'faulty applicaton' do
       click_on 'Accept All Cookies'
+      save_and_open_page   
+      File.write('./page.txt', page.html)
       click_on(id: 'input_73')
       # click_on 'input_73'
     end

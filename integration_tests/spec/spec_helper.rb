@@ -10,4 +10,4 @@ Capybara.run_server = false
 # Set the base URL for all our tests
 Capybara.app_host = 'https://www.appacademy.io'
 
-Capybara.default_max_wait_time = 10
+Capybara.default_max_wait_time = 3
