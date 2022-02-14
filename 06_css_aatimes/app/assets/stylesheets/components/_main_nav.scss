@@ -56,3 +56,13 @@
 .right-nav > ul > li:last-of-type:hover {
   background-color: $lightest-gray;
 }
+
+@media all and (max-width: 1000px) {
+  .right-nav > ul > li > button {
+    display: none;
+  }
+
+  .left-nav > ul > li {
+    padding-left: 0px;
+  }
+}
