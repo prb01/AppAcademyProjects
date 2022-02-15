@@ -3,6 +3,7 @@
 // dropdown function that applies or removes 'expand' class to the sections-sidebar nav
 const toggleSidebar = () => {
 	$("#sections-sidebar").toggleClass('expand');
+	$("body").toggleClass('shrink');
 }
 
 const toggleSideBarIfExpanded = (e) => {
