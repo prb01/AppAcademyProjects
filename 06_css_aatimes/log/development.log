@@ -8502,3 +8502,47 @@ Started GET "/assets/jquery_ujs.self-784a997f6726036b1993eb2217c9cb558e1cbb801c6
 Started GET "/assets/components/sidebar.self-2a1862bb3ccca10b3bf920638ee080968e63d5aabe0112719d13593635dbd726.js?body=1" for 127.0.0.1 at 2022-02-15 11:37:24 -0500
 Started GET "/assets/application.self-f571b9db02bf4ed04c38a6a29072ac382f7d4f47db1fab9817aeadb0d8665235.js?body=1" for 127.0.0.1 at 2022-02-15 11:37:24 -0500
 Started GET "/assets/new_office-dc8255e20493abaf1d75b0f4bdea30fa294f1b9219a228c32d5bce0e422fc16b.jpg" for 127.0.0.1 at 2022-02-15 11:37:25 -0500
+Started GET "/?search=sfdfdld" for 127.0.0.1 at 2022-02-15 11:38:55 -0500
+Processing by StaticPagesController#index as HTML
+  Parameters: {"search"=>"sfdfdld"}
+  Rendering static_pages/index.html.erb within layouts/application
+  Rendered shared/_sections_sidebar.html.erb (1.2ms)
+  Rendered shared/_gear_dropdown.html.erb (0.6ms)
+  Rendered shared/_main_nav.html.erb (6.8ms)
+  Rendered shared/_masthead.html.erb (1.0ms)
+  Rendered shared/_sections_nav.html.erb (0.5ms)
+  Rendered shared/_search_modal.html.erb (0.6ms)
+  Rendered shared/_main_content.html.erb (4.0ms)
+  Rendered static_pages/index.html.erb within layouts/application (22.6ms)
+Completed 200 OK in 53ms (Views: 50.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2022-02-15 11:39:32 -0500
+Processing by StaticPagesController#index as HTML
+  Rendering static_pages/index.html.erb within layouts/application
+  Rendered shared/_sections_sidebar.html.erb (0.8ms)
+  Rendered shared/_gear_dropdown.html.erb (0.7ms)
+  Rendered shared/_main_nav.html.erb (5.5ms)
+  Rendered shared/_masthead.html.erb (1.1ms)
+  Rendered shared/_sections_nav.html.erb (0.8ms)
+  Rendered shared/_search_modal.html.erb (0.6ms)
+  Rendered shared/_main_content.html.erb (4.2ms)
+  Rendered static_pages/index.html.erb within layouts/application (21.4ms)
+Completed 200 OK in 55ms (Views: 53.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943287861" for 127.0.0.1 at 2022-02-15 11:41:27 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943287877" for 127.0.0.1 at 2022-02-15 11:41:27 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943287861" for 127.0.0.1 at 2022-02-15 11:41:28 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943303203" for 127.0.0.1 at 2022-02-15 11:41:43 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943303211" for 127.0.0.1 at 2022-02-15 11:41:43 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943319174" for 127.0.0.1 at 2022-02-15 11:41:59 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943319183" for 127.0.0.1 at 2022-02-15 11:41:59 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943337494" for 127.0.0.1 at 2022-02-15 11:42:17 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943337504" for 127.0.0.1 at 2022-02-15 11:42:17 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943344622" for 127.0.0.1 at 2022-02-15 11:42:24 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943344630" for 127.0.0.1 at 2022-02-15 11:42:24 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943366914" for 127.0.0.1 at 2022-02-15 11:42:46 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943366920" for 127.0.0.1 at 2022-02-15 11:42:46 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943374863" for 127.0.0.1 at 2022-02-15 11:42:54 -0500
+Started GET "/assets/application.self-e49bc34949c40b62a9fdebbbc3df14e15c1f5cc71cbb1c9866bb8f36e91422ae.css?body=1&livereload=1644943374871" for 127.0.0.1 at 2022-02-15 11:42:54 -0500

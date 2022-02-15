@@ -27,12 +27,8 @@
   }
 }
 
-.hidden {
-  display: none;
-}
-
 #gear:hover .hidden {
-  display: block;
+  visibility: visible;
 }
 
 .editions {
