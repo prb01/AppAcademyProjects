@@ -9,6 +9,7 @@ body {
 	font-family: $serif;
 	font-size: 12px;
 	transition: padding-left 0.5s;
+	overflow-x: hidden;
 }
 
 button {
@@ -35,7 +36,7 @@ a:hover {
 }
 
 .hidden {
-	display: none;
+	visibility: hidden;
 }
 
 /*
