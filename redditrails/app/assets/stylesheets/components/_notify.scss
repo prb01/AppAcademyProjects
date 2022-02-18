@@ -1,0 +1,57 @@
+.notify-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-basis: content;
+  opacity: 0;
+
+  padding: 20px 13px;
+  margin: 10px auto;
+
+  width: max-content;
+  max-width: 600px;
+
+  background-color: $lightest-green;
+  border: 1px solid $light-green;
+  border-radius: 5px;
+  color: $dark-green;
+
+
+  animation-name: flash;
+  animation-duration: 4s;
+
+  i {
+    position: absolute;
+    left: -0.4rem;
+    top: -0.4rem;
+    z-index: 99;
+  }
+
+  i::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: -0.3rem;
+    top: -0.3rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: white;
+    border: 2px solid $light-green;
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  li {
+    align-self: flex-start;
+    list-style: disc;
+    list-style-position: inside;
+  }
+}
+
+@keyframes flash {
+  0% {opacity: 0.5;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}

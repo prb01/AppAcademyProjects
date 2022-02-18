@@ -1,0 +1,43 @@
+.error-wrapper {
+  position: relative;
+  display: flex;
+  flex-basis: content;
+
+  padding: 20px 13px;
+  margin: 10px auto;
+
+  width: max-content;
+  max-width: 600px;
+
+  background-color: $lightest-red;
+  border: 1px solid $light-red;
+  border-radius: 5px;
+  color: $dark-red;
+
+  i {
+    position: absolute;
+    left: -0.4rem;
+    top: -0.4rem;
+    z-index: 99;
+  }
+
+  i::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: -0.3rem;
+    top: -0.3rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: white;
+    border: 2px solid $light-red;
+    border-radius: 50%;
+    z-index: -1;
+  }
+
+  li {
+    align-self: flex-start;
+    list-style: disc;
+    list-style-position: inside;
+  }
+}

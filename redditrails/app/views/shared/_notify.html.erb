@@ -1,0 +1,12 @@
+<% if flash[:notify] %>
+  <div class="notify-wrapper">
+    <i class="fa fa-check"></i>
+
+    <ul>
+      <% flash[:notify].each do |notification| %>
+        <li><%= notification %></li>
+      <% end %>
+    </ul>
+
+  </div>
+<% end %>

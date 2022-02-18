@@ -1,0 +1,12 @@
+<% if flash[:errors] %>
+  <div class="error-wrapper">
+    <i class="fa fa-exclamation-triangle"></i>
+
+    <ul>
+      <% flash[:errors].each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+
+  </div>
+<% end %>
