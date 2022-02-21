@@ -10,7 +10,25 @@
   </head>
 
   <body>
+    <%= render 'shared/header' %>
     <%= render 'shared/notify' %>
-    <%= yield %>
+    <main>
+      <nav class="left-nav"></nav>
+      
+      <section class="main-content"><%= yield %></section>
+      
+      <% if logged_in? %>
+        <nav class="right-nav">
+          <ul>
+            <li>
+              <%= link_to 'Create Sub', new_sub_url %>
+            </li>
+            <li>
+              <%= link_to 'Create Post', new_post_url %>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+    </main>
   </body>
 </html>

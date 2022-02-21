@@ -4,12 +4,12 @@ class SubsController < ApplicationController
 
   def index
     @subs = Sub.all
-
     render :index
   end
 
   def show
     @sub = Sub.find_by(id: params[:id])
+    render :show
   end
   
   def new

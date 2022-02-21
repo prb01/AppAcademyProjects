@@ -1,0 +1,24 @@
+<header>
+  <a href="/">LOGO</a>
+
+  <nav class="user-nav">
+    <ul>
+      <% unless logged_in? %>
+        <li>
+          <%= button_to "Login", new_session_url, method: :get, class: 'white' %>
+        </li>
+
+        <li>
+          <%= button_to "Sign Up", new_user_url, method: :get %>
+        </li>
+      <% else %>
+        <span>
+          <%= current_user.email %>
+        </span>
+        <li>
+          <%= button_to "Logout", session_url, method: :delete, class: 'white' %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+</header>

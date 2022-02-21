@@ -1,0 +1,42 @@
+<div class="form-wrapper">
+  <form action="<%= action_url %>" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+    
+    <% if method == "patch" %>
+      <input type="hidden" name="_method" value="PATCH">
+    <% end %>
+
+    <div class="form-title">
+      <label for="title">Title*:</label>
+      <input type="text" name="post[title]" id="title"
+      value="<%= post.title if post %>">
+    </div>
+
+    <div class="form-url">
+      <label for="url">URL:</label>
+      <input type="url" name="post[url]" id="url"
+      value="<%= post.url if post %>">
+    </div>
+
+    <div class="form-content">
+      <label for="content">Content:</label>
+      <textarea name="post[content]" id="content" rows="4"><%= post.content if post %></textarea>
+    </div>
+
+    <div class="form-subs">
+    <input type="hidden" name="post[sub_ids][]" value="">
+    <label>Choose Subs:</label>
+    <% Sub.all.each do |sub| %>
+      <label><input type="checkbox" name="post[sub_ids][]" 
+      id="<%= sub.id %>"
+      value="<%= sub.id %>"
+      <%= "checked" if post && post.sub_ids.include?(sub.id) %>><%= sub.title %></label>
+    <% end %>
+    </div>
+
+
+    <input type="submit" value="<%= submit_btn %>">
+  </form>
+</div>
+
+<%= render 'shared/error' %>

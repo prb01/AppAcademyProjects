@@ -1,0 +1,12 @@
+.user-nav {
+
+  > ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  li {
+    margin: 0.5rem 0 0.5rem 0.7rem;
+  }
+}

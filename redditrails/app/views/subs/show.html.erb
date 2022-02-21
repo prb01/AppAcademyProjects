@@ -1,3 +1,18 @@
 <h1><%= @sub.title %></h1>
 <h2>Description</h2>
 <p><%= @sub.description %></p>
+
+<section class="posts-section">
+  <hr>
+  <h2>Posts</h2>
+  <ul>
+    <% @sub.posts.each do |post| %>
+      <li><%= link_to post.title, post_url(post.id) %></li>
+    <% end %>
+  </ul>
+
+  <% if current_user == @sub.mod %>
+    <hr>
+    <%= link_to 'Edit Sub', edit_sub_url(@sub) %>
+  <% end %>
+</section>

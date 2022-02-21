@@ -1,11 +1,12 @@
 .notify-wrapper {
   position: absolute;
-  top: 50%;
+  top: 2%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -2%);
   display: flex;
   flex-basis: content;
   opacity: 0;
+  z-index: 2;
 
   padding: 20px 13px;
   margin: 10px auto;

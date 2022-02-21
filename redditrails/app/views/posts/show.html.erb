@@ -1,0 +1,21 @@
+<h1><%= link_to @post.title, @post.url, target: :_blank %></h1> 
+<h3>by <%= @post.author.email %></h3>
+<h2>Content:</h2>
+<p><%= @post.content %></p>
+
+<section class="subs-section">
+  <hr>
+  <h2>Subs</h2>
+  <ul>
+    <% @post.subs.each do |sub| %>
+      <li><%= link_to sub.title, sub_url(sub.id) %></li>
+    <% end %>
+  </ul>
+
+  <% if current_user == @post.author %>
+    <hr>
+    <%= link_to 'Edit Post', edit_post_url(@post) %>
+  <% end %>
+</section>
+
+

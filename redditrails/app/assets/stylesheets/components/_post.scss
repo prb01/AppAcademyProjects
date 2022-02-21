@@ -1,0 +1,14 @@
+.posts-section,
+.subs-section {
+  margin-top: 1rem;
+
+  hr {
+    border: 1px solid $lightest-gray;
+    margin: 1rem 0;
+  }
+
+  ul {
+    list-style: disc;
+    list-style-position: inside;
+  }
+}
