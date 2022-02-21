@@ -1,10 +1,25 @@
 body {
   font-family: $sans-serif;
+  font-size: 12px;
 }
 
 header {}
 
 nav {}
+
+h1 {
+  margin: 1.5rem 0 0.8rem 0;
+
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+h2 {
+  margin: 1rem 0 0.6rem 0;
+
+  font-weight: 800;
+  font-size: 1.1rem;
+}
 
 input {
   padding: 8px;
@@ -31,4 +46,15 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background-color: $reddit-blue-light;
+}
+
+textarea {
+  padding: 8px;
+  padding-left: 15px;
+
+  background-color: white;
+  border: 1px solid $light-gray;
+  border-radius: 3px;
+  box-shadow: inset 3px 2px 5px $light-gray;
+  resize: none;
 }

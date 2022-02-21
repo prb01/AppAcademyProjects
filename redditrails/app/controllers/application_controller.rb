@@ -26,7 +26,14 @@ class ApplicationController < ActionController::Base
     params.require(:user).permit(:email, :password)
   end
 
+  def require_user!
+    unless current_user
+      redirect_to new_session_url
+    end
+  end
+
   def require_moderator!
+    sub = Sub.find_by(id: params[:id])
     mod = Sub.find_by(id: params[:id]).mod
 
     unless current_user == mod

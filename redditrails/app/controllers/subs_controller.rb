@@ -1,5 +1,6 @@
 class SubsController < ApplicationController
-  before_action :require_moderator!, only: [:update]
+  before_action :require_user!, except: [:index, :show]
+  before_action :require_moderator!, only: [:edit, :update]
 
   def index
     @subs = Sub.all
@@ -12,11 +13,14 @@ class SubsController < ApplicationController
   end
   
   def new
+    @sub = nil
+
     render :new
   end
 
   def create
     @sub = Sub.new(sub_params)
+    @sub.moderator_id = current_user.id
 
     if @sub.save
       flash[:notify] = ["#{@sub.title} successfully created"]
@@ -47,6 +51,6 @@ class SubsController < ApplicationController
   private
 
   def sub_params
-    params.require(:sub).permit(:title, :description, :moderator_id)
+    params.require(:sub).permit(:title, :description)
   end
 end

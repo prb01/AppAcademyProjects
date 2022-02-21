@@ -1,0 +1,11 @@
+<h1>SubReddits</h1>
+
+<div class="sub-list">
+  <ul>
+    <% @subs.each do |sub| %>
+      <li>
+        <%= link_to sub.title, sub_url(sub) %>
+      </li>
+    <% end %>
+  </ul>
+</div>

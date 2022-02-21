@@ -3,7 +3,7 @@ class Sub < ApplicationRecord
   validates :title, uniqueness: true
 
   belongs_to :mod,
-    class: 'User',
+    class_name: 'User',
     primary_key: :id,
     foreign_key: :moderator_id
 end

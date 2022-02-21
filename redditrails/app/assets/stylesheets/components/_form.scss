@@ -1,4 +1,4 @@
-.userform-wrapper {
+.form-wrapper {
   display: flex;
   justify-content: center;
   
@@ -9,7 +9,13 @@
   border-radius: 10px;
   background-color: $lightest-gray;
 
+  font-size: 1rem;
+
   div {
     margin: 0.7rem 0;
+
+    label {
+      display: block;
+    }
   }
 }

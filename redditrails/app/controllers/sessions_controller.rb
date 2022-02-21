@@ -9,8 +9,7 @@ class SessionsController < ApplicationController
     if @user
       flash[:notify] = ["#{@user.email} account successfully logged in"]
       login!(@user)
-      redirect_to new_session_url
-      # redirect_to subs_url
+      redirect_to subs_url
     else
       flash.now[:errors] = ["Email/Password combo not valid"]
       render :new

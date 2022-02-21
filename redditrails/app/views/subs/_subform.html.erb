@@ -1,0 +1,24 @@
+<div class="form-wrapper">
+  <form action="<%= action_url %>" method="post">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+    
+    <% if method == "patch" %>
+      <input type="hidden" name="_method" value="PATCH">
+    <% end %>
+
+    <div class="form-title">
+      <label for="title">Title:</label>
+      <input type="text" name="sub[title]" id="title"
+      value="<%= sub.title if sub %>">
+    </div>
+
+    <div class="form-description">
+      <label for="description">Description:</label>
+      <textarea name="sub[description]" id="description" rows="4"><%= sub.description if sub %></textarea>
+    </div>
+
+    <input type="submit" value="<%= submit_btn %>">
+  </form>
+</div>
+
+<%= render 'shared/error' %>
