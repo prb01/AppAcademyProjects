@@ -25,4 +25,12 @@ class ApplicationController < ActionController::Base
   def user_params
     params.require(:user).permit(:email, :password)
   end
+
+  def require_moderator!
+    mod = Sub.find_by(id: params[:id]).mod
+
+    unless current_user == mod
+      redirect_to sub_url(sub)
+    end
+  end
 end
