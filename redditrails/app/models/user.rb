@@ -4,8 +4,11 @@ class User < ApplicationRecord
   validates :email, :password_digest, presence: true
   validates :password, length: { minimum: 6 }, allow_nil: true
   validates :email, :session_token, uniqueness: true
-
   before_validation :ensure_session_token
+
+  has_many :subs, foreign_key: :moderator_id
+  has_many :posts, foreign_key: :author_id
+  has_many :comments, foreign_key: :author_id
 
   attr_reader :password
 
