@@ -22,9 +22,9 @@
   <hr>
   <h2>Comments</h2>
   <ul>
-    <% @post.comments.each do |comment| %>
-      <li>
-        <%= link_to comment.content, comment_url(comment) %>
+    <% @post.parent_comments.each do |comment| %>
+      <li><%= link_to comment.content, comment_url(comment) %>
+      <%= render 'comments/comment', comment: comment %>
       </li>
     <% end %>
   </ul>
