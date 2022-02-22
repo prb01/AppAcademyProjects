@@ -1,7 +1,10 @@
-<% comment.children.each do |comment| %>
+<% all_comments.each do |c2| %>
+  <% next unless c2.parent_comment_id == c1.id %>
   <ul>
-  <li><%= link_to comment.content, comment_url(comment) %>
-  <%= render 'comments/comment', comment: comment %>
+  <li><%= link_to c2.content, comment_url(c2) %> 
+  <span><%= " by #{c2.author.email} at #{c2.created_at.strftime('%H:%M %d-%b-%y')}" %></span>
+
+  <%= render 'comments/comment', all_comments: all_comments, c1: c2 %>
   </li>
   </ul>
 <% end%>

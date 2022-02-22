@@ -15,4 +15,20 @@
   ul > li {
     margin-left: 10px;
   }
+
+  a {
+    margin-right: 1rem;
+  }
+
+  a + a {
+    padding-left: 1rem;
+    border-left: 1px solid $light-gray;
+  }
+
+  span {
+    display: block;
+    margin-left: 1rem;
+    color: $gray;
+    font-size: 0.5rem;
+  }
 }

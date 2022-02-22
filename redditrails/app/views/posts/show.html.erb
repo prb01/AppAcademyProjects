@@ -12,9 +12,12 @@
     <% end %>
   </ul>
 
-  <% if current_user == @post.author %>
-    <hr>
-    <%= link_to 'Edit Post', edit_post_url(@post) %>
+  <% if logged_in? %>
+    <hr>    
+    <%= link_to 'Add Comment', new_post_comment_url(@post) %>
+    <% if current_user == @post.author %>
+      <%= link_to 'Edit Post', edit_post_url(@post) %>
+    <% end %>
   <% end %>
 </section>
 
@@ -22,9 +25,11 @@
   <hr>
   <h2>Comments</h2>
   <ul>
-    <% @post.parent_comments.each do |comment| %>
-      <li><%= link_to comment.content, comment_url(comment) %>
-      <%= render 'comments/comment', comment: comment %>
+    <% @all_comments.each do |c1| %>
+      <% next unless c1.parent_comment_id.nil? %>
+      <li><%= link_to c1.content, comment_url(c1) %> 
+      <span><%= " by #{c1.author.email} at #{c1.created_at.strftime('%H:%M %d-%b-%y')}" %></span>
+      <%= render 'comments/comment', all_comments: @all_comments, c1: c1 %>
       </li>
     <% end %>
   </ul>
