@@ -1,8 +1,9 @@
 require 'active_support'
 require 'active_support/core_ext'
+require 'active_support/inflector'
 require 'erb'
 require_relative './session'
-require 'active_support/inflector'
+require_relative './flash'
 
 class ControllerBase
   attr_reader :req, :res, :params
@@ -26,6 +27,7 @@ class ControllerBase
     res.status = 302
     res['Location'] = url
     session.store_session(res)
+    flash.store_flash(res)
     @already_built_response = true
   end
 
@@ -37,6 +39,7 @@ class ControllerBase
     res['Content-Type'] = content_type
     res.write(content)
     session.store_session(res)
+    flash.store_flash(res)
     @already_built_response = true
   end
 
@@ -53,6 +56,10 @@ class ControllerBase
   # method exposing a `Session` object
   def session
     @session ||= Session.new(req)
+  end
+
+  def flash
+    @flash ||= Flash.new(req)
   end
 
   # use this with the router to call action_name (:index, :show, :create...)
