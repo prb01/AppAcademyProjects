@@ -55,5 +55,6 @@ end.to_app
 
 Rack::Server.start(
  app: app,
+ Host: 'localhost',
  Port: 3000
 )

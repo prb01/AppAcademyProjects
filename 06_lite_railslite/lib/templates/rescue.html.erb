@@ -1,0 +1,14 @@
+<h1>You done f**ked up!</h1>
+<h2><%= e.class%>: <%= e.message %></h2>
+
+<% e.backtrace.each do |trace| %>
+  <%= trace %>
+  <br>
+<% end %>
+
+<h2>Source code</h2>
+<h3><%= e.backtrace.first %></h3>
+<% source_code(e).each do |code| %>
+  <%= code %>
+  <br>
+<% end %>
