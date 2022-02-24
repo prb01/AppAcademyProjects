@@ -12,6 +12,7 @@ end
 router = Router.new
 router.draw do
   get Regexp.new("^/$"), MyController, :go
+  # get Regexp.new("^/public/(?<filename>\\w+\.\\w+)$"), MyController, :asset
 end
 
 app = Proc.new do |env|
@@ -28,5 +29,6 @@ end.to_app
 
 Rack::Server.start(
  app: app,
+ Host: 'localhost',
  Port: 3000
 )
