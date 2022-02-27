@@ -2,11 +2,16 @@ require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/inflector'
 require 'erb'
+require 'securerandom'
 require_relative './session'
 require_relative './flash'
 
 class ControllerBase
   attr_reader :req, :res, :params
+
+  def self.protect_from_forgery
+    @@protect_from_forgery = true
+  end
 
   # Setup the controller
   def initialize(req, res, route_params = {})
@@ -14,6 +19,20 @@ class ControllerBase
     @res = res
     @params = req.params.merge(route_params)
     @already_built_response = false
+  end
+
+  def form_authenticity_token
+    @token ||= SecureRandom.urlsafe_base64
+    res.set_cookie('authenticity_token', { path: '/', value: @token })
+    @token
+  end
+
+  def check_authenticity_token
+    cookie_token = req.cookies['authenticity_token']
+    unless cookie_token && params['authenticity_token'] == cookie_token
+      puts "HELLO WE ALL UP IN HERE"
+      raise "Invalid authenticity token"
+    end
   end
 
   # Helper method to alias @already_built_response
@@ -64,8 +83,20 @@ class ControllerBase
 
   # use this with the router to call action_name (:index, :show, :create...)
   def invoke_action(name)
+    if protect_from_forgery? && req.request_method != "GET"
+      self.check_authenticity_token
+    else
+      self.form_authenticity_token
+    end
+
     self.send(name)
-    invoke_action(render) unless already_built_response?
+    render(name) unless already_built_response?
+  end
+
+  private
+
+  def protect_from_forgery?
+    @@protect_from_forgery
   end
 end
 
